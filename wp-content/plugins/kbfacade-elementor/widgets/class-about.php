@@ -81,14 +81,12 @@ class About extends Widget_Base_Common {
 		?>
 		<section class="kbf-about" id="about">
 			<div class="kbf-container kbf-about__grid">
-				<div class="kbf-about__content">
-					<h2><?php echo nl2br( esc_html( $s['title'] ) ); ?></h2>
-					<div class="kbf-about__text">
-						<?php echo wp_kses_post( $s['text'] ); ?>
-					</div>
-				</div>
+				<h2 class="kbf-about__title"><?php echo nl2br( esc_html( $s['title'] ) ); ?></h2>
 				<div class="kbf-about__logo">
 					<?php kbfacade_render_image( $s['logo'], $logo_fallback, __( 'КБФасад', 'kbfacade-elementor' ) ); ?>
+				</div>
+				<div class="kbf-about__text">
+					<?php echo wp_kses_post( $s['text'] ); ?>
 				</div>
 			</div>
 		</section>
