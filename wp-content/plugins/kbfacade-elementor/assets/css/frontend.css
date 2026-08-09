@@ -566,6 +566,15 @@
 	padding: 3.25rem 0 4rem;
 }
 
+.kbf-catalog {
+	padding-top: 0;
+}
+
+.kbf-catalog > .kbf-container {
+	border-top: 1px solid #343d45;
+	padding-top: 3.25rem;
+}
+
 .kbf-catalog__grid,
 .kbf-benefits__grid,
 .kbf-services__grid {
