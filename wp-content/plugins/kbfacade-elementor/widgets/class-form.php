@@ -86,12 +86,12 @@ class Form extends Widget_Base_Common {
 	 */
 	protected function render() {
 		$s   = $this->get_settings_for_display();
-		$url = ! empty( $s['image']['url'] ) ? $s['image']['url'] : kbfacade_asset_url( 'assets/images/form/form-side.jpg' );
+		$image_fallback = kbfacade_asset_relative( 'assets/images/form/form-side.jpg' );
 		?>
 		<section class="kbf-inline-form">
 			<div class="kbf-container kbf-inline-form__grid">
 				<div class="kbf-inline-form__media">
-					<img src="<?php echo esc_url( $url ); ?>" alt="" loading="lazy" />
+					<?php kbfacade_render_image( $s['image'], $image_fallback ); ?>
 				</div>
 				<div class="kbf-inline-form__content">
 					<h2><?php echo esc_html( $s['title'] ); ?></h2>

@@ -84,14 +84,8 @@ class Cta extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s   = $this->get_settings_for_display();
-		$url = ! empty( $s['image']['url'] ) ? $s['image']['url'] : '';
-		if ( ! $url ) {
-			$png = KBFACADE_ELEMENTOR_PATH . 'assets/images/cta/worker.png';
-			$url = file_exists( $png )
-				? kbfacade_asset_url( 'assets/images/cta/worker.png' )
-				: kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
-		}
+		$s               = $this->get_settings_for_display();
+		$image_fallback  = kbfacade_worker_fallback_relative();
 		?>
 		<section class="kbf-cta">
 			<div class="kbf-container kbf-cta__inner">
@@ -103,7 +97,7 @@ class Cta extends Widget_Base_Common {
 					</button>
 				</div>
 				<div class="kbf-cta__media">
-					<img src="<?php echo esc_url( $url ); ?>" alt="" loading="lazy" />
+					<?php kbfacade_render_image( $s['image'], $image_fallback ); ?>
 				</div>
 			</div>
 		</section>

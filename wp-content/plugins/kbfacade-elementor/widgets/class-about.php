@@ -77,7 +77,7 @@ class About extends Widget_Base_Common {
 	 */
 	protected function render() {
 		$s        = $this->get_settings_for_display();
-		$logo_url = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-grey.png' );
+		$logo_fallback = kbfacade_theme_asset_relative( 'images/logo/kbfacade-grey.png' );
 		?>
 		<section class="kbf-about" id="about">
 			<div class="kbf-container kbf-about__grid">
@@ -88,7 +88,7 @@ class About extends Widget_Base_Common {
 					</div>
 				</div>
 				<div class="kbf-about__logo">
-					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php esc_attr_e( 'КБФасад', 'kbfacade-elementor' ); ?>" />
+					<?php kbfacade_render_image( $s['logo'], $logo_fallback, __( 'КБФасад', 'kbfacade-elementor' ) ); ?>
 				</div>
 			</div>
 		</section>

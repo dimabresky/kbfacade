@@ -502,34 +502,21 @@
 	background: #e0e0e0;
 }
 
-.kbf-hero__slide {
-	position: absolute;
-	inset: 0;
+.kbf-hero__banner {
 	margin: 0;
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 0.45s ease;
+	width: 100%;
+	min-height: clamp(240px, 42vw, 460px);
+	overflow: hidden;
 }
 
-.kbf-hero__slide.is-active {
-	opacity: 1;
-	pointer-events: auto;
-}
-
-.kbf-hero__slide img,
-.kbf-hero__slide video {
+.kbf-hero__banner img,
+.kbf-hero__banner picture,
+.kbf-hero__banner video {
 	width: 100%;
 	height: 100%;
+	min-height: clamp(240px, 42vw, 460px);
 	object-fit: cover;
-}
-
-.kbf-hero__controls {
-	display: flex;
-	justify-content: flex-end;
-	gap: 0.35rem;
-	margin-top: 0.75rem;
-	width: min(1200px, calc(100% - 2.5rem));
-	margin-inline: auto;
+	display: block;
 }
 
 /* About */
@@ -1000,7 +987,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.kbf-hero__slide,
+	.kbf-hero__banner,
 	.kbf-carousel__overlay,
 	.kbf-gallery__item img {
 		transition: none;
