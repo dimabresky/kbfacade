@@ -1,0 +1,17 @@
+/*
+Theme Name: КБФасад
+Theme URI: https://github.com/dimabresky/kbfacade
+Author: КБФасад
+Author URI: https://pkdfasad.by
+Description: Lightweight Elementor-ready theme for the КБФасад ventilated façades landing.
+Requires at least: 6.8
+Tested up to: 7.0
+Requires PHP: 7.4
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: kbfacade
+Tags: custom-logo, custom-menu, editor-style, featured-images, full-width-template, theme-options, translation-ready
+*/
+
+/* Base styles are loaded from assets/css/main.css via functions.php. */

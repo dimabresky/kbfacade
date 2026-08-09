@@ -1,0 +1,234 @@
+{
+  "version": "1.0.0",
+  "title": "КБФасад Landing",
+  "type": "page",
+  "page_settings": {
+    "hide_title": "yes"
+  },
+  "content": [
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-header", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-hero", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-about", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-catalog", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-gallery", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "elType": "widget",
+              "widgetType": "kbf-benefits",
+              "settings": {
+                "preset": "developers",
+                "title": "КБФасад — для девелоперов:",
+                "lead": "Сокращение сроков строительства и бюджета проекта + снижение рисков + увеличение полезной площади здания"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "elType": "widget",
+              "widgetType": "kbf-benefits",
+              "settings": {
+                "preset": "builders",
+                "title": "КБФасад — для строителей:",
+                "lead": "Минимум операций на объекте + удобный монтаж + быстрый переход к чистовой отделке"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "elType": "widget",
+              "widgetType": "kbf-slider",
+              "settings": {
+                "preset": "fastenings",
+                "title": "Варианты креплений:"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-cta", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "elType": "widget",
+              "widgetType": "kbf-services",
+              "settings": { "anchor": "services" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "elType": "widget",
+              "widgetType": "kbf-slider",
+              "settings": {
+                "preset": "objects",
+                "title": "Наши объекты:",
+                "subtitle": "Нам есть, чем гордиться!",
+                "anchor": "objects",
+                "overlay_mode": "title_description"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-form", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "elType": "widget",
+              "widgetType": "kbf-contacts",
+              "settings": { "anchor": "contacts" }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "elType": "widget", "widgetType": "kbf-footer", "settings": {} }
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "Preferred install path: WP Admin → Tools → КБФасад Landing. This JSON mirrors the section order for Elementor import / documentation."
+}

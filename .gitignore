@@ -9,6 +9,7 @@ wp-content/uploads/
 wp-content/cache/
 wp-content/upgrade/
 wp-content/backup*/
+wp-content/languages/
 wp-content/advanced-cache.php
 wp-content/object-cache.php
 wp-content/db.php
@@ -26,18 +27,19 @@ wp-content/themes/twentytwentythree/
 wp-content/themes/twentytwentyfour/
 wp-content/themes/twentytwentyfive/
 wp-content/themes/index.php
+wp-content/index.php
 
-# WordPress core stubs present in this workspace
-wp-admin/
-wp-includes/
-index.php
-wp-settings.php
-wp-blog-header.php
-wp-load.php
-wp-login.php
-xmlrpc.php
-license.txt
-readme.html
+# WordPress core stubs present in this workspace (root only)
+/wp-admin/
+/wp-includes/
+/index.php
+/wp-settings.php
+/wp-blog-header.php
+/wp-load.php
+/wp-login.php
+/xmlrpc.php
+/license.txt
+/readme.html
 
 # IDE / OS
 nbproject/
@@ -50,3 +52,7 @@ Thumbs.db
 # Font build intermediates (keep source TTF and generated WOFF2 in theme)
 *.tmp
 *.bak
+
+# Heavy editable design sources (PNG/SVG/TTF and preview remain tracked)
+developer-stuff/**/*.psd
+developer-stuff/**/*.PSD
