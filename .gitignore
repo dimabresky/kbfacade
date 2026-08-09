@@ -28,17 +28,17 @@ wp-content/themes/twentytwentyfour/
 wp-content/themes/twentytwentyfive/
 wp-content/themes/index.php
 
-# WordPress core stubs present in this workspace
-wp-admin/
-wp-includes/
-index.php
-wp-settings.php
-wp-blog-header.php
-wp-load.php
-wp-login.php
-xmlrpc.php
-license.txt
-readme.html
+# WordPress core stubs present in this workspace (root only)
+/wp-admin/
+/wp-includes/
+/index.php
+/wp-settings.php
+/wp-blog-header.php
+/wp-load.php
+/wp-login.php
+/xmlrpc.php
+/license.txt
+/readme.html
 
 # IDE / OS
 nbproject/
