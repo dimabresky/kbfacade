@@ -84,14 +84,36 @@
 		var autoplay = root.getAttribute('data-autoplay') === 'yes' && !reducedMotion;
 		var speed = parseInt(root.getAttribute('data-speed') || '5000', 10);
 		var timer = null;
+		var prev = qs(root, '[data-kbf-carousel-prev]');
+		var next = qs(root, '[data-kbf-carousel-next]');
 
 		function scrollByDir(dir) {
 			var amount = Math.max(240, Math.floor(track.clientWidth * 0.8));
 			track.scrollBy({ left: dir * amount, behavior: reducedMotion ? 'auto' : 'smooth' });
 		}
 
-		var prev = qs(root, '[data-kbf-carousel-prev]');
-		var next = qs(root, '[data-kbf-carousel-next]');
+		function updateNav() {
+			var maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+			var overflow = maxScroll > 1;
+			var atStart = track.scrollLeft <= 1;
+			var atEnd = track.scrollLeft >= maxScroll - 1;
+
+			if (prev) {
+				if (!overflow || atStart) {
+					prev.setAttribute('hidden', '');
+				} else {
+					prev.removeAttribute('hidden');
+				}
+			}
+			if (next) {
+				if (!overflow || atEnd) {
+					next.setAttribute('hidden', '');
+				} else {
+					next.removeAttribute('hidden');
+				}
+			}
+		}
+
 		if (prev) {
 			prev.addEventListener('click', function () {
 				scrollByDir(-1);
@@ -122,6 +144,9 @@
 			{ passive: true }
 		);
 
+		track.addEventListener('scroll', updateNav, { passive: true });
+		window.addEventListener('resize', updateNav);
+
 		function stop() {
 			if (timer) {
 				window.clearInterval(timer);
@@ -147,6 +172,8 @@
 		root.addEventListener('mouseleave', start);
 		root.addEventListener('focusin', stop);
 		root.addEventListener('focusout', start);
+		updateNav();
+		window.requestAnimationFrame(updateNav);
 		start();
 	}
 

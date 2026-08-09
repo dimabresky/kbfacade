@@ -56,7 +56,7 @@ class Slider extends Widget_Base_Common {
 			return $items;
 		}
 
-		return array(
+		$fastenings = array(
 			array(
 				'title'       => 'Крепление для плит из керамогранита на кляммерах (видимое крепление)',
 				'description' => 'Надёжная видимая система для керамогранита с точной геометрией швов.',
@@ -74,6 +74,9 @@ class Slider extends Widget_Base_Common {
 				'description' => 'Решение для клинкера с акцентом на долговечность и аккуратный внешний вид.',
 			),
 		);
+
+		// Duplicate for carousel overflow testing (arrows when > 4 visible).
+		return array_merge( $fastenings, $fastenings );
 	}
 
 	/**
@@ -215,11 +218,15 @@ class Slider extends Widget_Base_Common {
 				$items = array_slice( array_values( $items ), 0, 5 );
 			}
 		}
+		// Saved Elementor pages may still have 4 slides; duplicate so arrows can be tested.
+		if ( 'fastenings' === $preset && count( $items ) <= 4 ) {
+			$items = array_merge( array_values( $items ), array_values( $items ) );
+		}
 		$anchor      = ! empty( $s['anchor'] ) ? $s['anchor'] : ( 'objects' === $preset ? 'objects' : '' );
 		$dir         = 'objects' === $preset ? 'objects/object-' : 'fastenings/fastening-';
 		$asset_count = 'objects' === $preset ? 5 : 4;
 		?>
-		<section class="kbf-slider-section" <?php echo $anchor ? 'id="' . esc_attr( $anchor ) . '"' : ''; ?> data-kbf-carousel data-autoplay="<?php echo esc_attr( $s['autoplay'] ); ?>" data-speed="<?php echo esc_attr( (string) $s['speed'] ); ?>">
+		<section class="kbf-slider-section kbf-slider-section--<?php echo esc_attr( $preset ); ?>" <?php echo $anchor ? 'id="' . esc_attr( $anchor ) . '"' : ''; ?> data-kbf-carousel data-autoplay="<?php echo esc_attr( $s['autoplay'] ); ?>" data-speed="<?php echo esc_attr( (string) $s['speed'] ); ?>">
 			<div class="kbf-container">
 				<div class="kbf-section-head">
 					<h2><?php echo esc_html( $s['title'] ); ?></h2>
