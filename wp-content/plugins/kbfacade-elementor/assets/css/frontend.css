@@ -1013,6 +1013,7 @@
 
 	.kbf-cta__copy {
 		padding-left: clamp(0.75rem, 4vw, 1.5rem);
+		padding-bottom: 0;
 	}
 
 	.kbf-cta__media {
