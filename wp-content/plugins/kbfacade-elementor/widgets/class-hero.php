@@ -283,7 +283,6 @@ class Hero extends Widget_Base_Common {
 					<h1 class="kbf-hero__title">
 						<?php if ( $line_1 ) : ?><span class="kbf-hero__title-line"><?php echo esc_html( $line_1 ); ?></span><?php endif; ?>
 						<?php if ( $line_2 ) : ?><span class="kbf-hero__title-line kbf-hero__title-line--muted"><?php echo esc_html( $line_2 ); ?></span><?php endif; ?>
-						<?php if ( $line_3 ) : ?><span class="kbf-hero__title-line kbf-hero__title-line--sub"><?php echo esc_html( $line_3 ); ?></span><?php endif; ?>
 					</h1>
 					<div class="kbf-hero__facts">
 						<?php foreach ( array_values( (array) $s['facts'] ) as $index => $fact ) : ?>
@@ -321,8 +320,13 @@ class Hero extends Widget_Base_Common {
 							</div>
 						<?php endforeach; ?>
 					</div>
+					<?php if ( $line_3 ) : ?>
+						<div class="kbf-hero__title-row">
+							<span class="kbf-hero__title-line kbf-hero__title-line--sub"><?php echo esc_html( $line_3 ); ?></span>
+							<span class="kbf-hero__title-line-rule" aria-hidden="true"></span>
+						</div>
+					<?php endif; ?>
 				</div>
-				<div class="kbf-hero__divider" aria-hidden="true"></div>
 			</div>
 
 			<div class="kbf-hero__media" data-kbf-slider-track>
