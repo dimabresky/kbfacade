@@ -209,9 +209,6 @@ function kbfacade_prefer_svg_fallback( array $paths, $default ) {
  */
 function kbfacade_worker_fallback_relative() {
 	$base = 'assets/images/cta/worker';
-	if ( file_exists( KBFACADE_ELEMENTOR_PATH . $base . '.webp' ) ) {
-		return kbfacade_asset_relative( $base . '.webp' );
-	}
 	if ( file_exists( KBFACADE_ELEMENTOR_PATH . $base . '.png' ) ) {
 		return kbfacade_asset_relative( $base . '.png' );
 	}
