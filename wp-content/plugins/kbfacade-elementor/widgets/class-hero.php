@@ -1,6 +1,6 @@
 <?php
 /**
- * Hero media slider widget.
+ * Hero banner widget.
  *
  * @package KBFacadeElementor
  */
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Hero with media slider and editable fact icons.
+ * Hero with static banner image and editable fact icons.
  */
 class Hero extends Widget_Base_Common {
 
@@ -37,7 +37,7 @@ class Hero extends Widget_Base_Common {
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-slider-push';
+		return 'eicon-image';
 	}
 
 	/**
@@ -77,55 +77,18 @@ class Hero extends Widget_Base_Common {
 			)
 		);
 
-		$slides = new Repeater();
-		$slides->add_control(
-			'media_type',
-			array(
-				'label'   => esc_html__( 'Media type', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::SELECT,
-				'default' => 'image',
-				'options' => array(
-					'image' => 'Image',
-					'video' => 'Video',
-				),
-			)
-		);
-		$slides->add_control(
-			'image',
-			array(
-				'label'     => esc_html__( 'Image', 'kbfacade-elementor' ),
-				'type'      => Controls_Manager::MEDIA,
-				'condition' => array( 'media_type' => 'image' ),
-			)
-		);
-		$slides->add_control(
-			'video_url',
-			array(
-				'label'       => esc_html__( 'Video URL (mp4)', 'kbfacade-elementor' ),
-				'type'        => Controls_Manager::TEXT,
-				'condition'   => array( 'media_type' => 'video' ),
-				'label_block' => true,
-			)
-		);
-		$slides->add_control(
-			'link',
-			array(
-				'label' => esc_html__( 'Click URL', 'kbfacade-elementor' ),
-				'type'  => Controls_Manager::URL,
-			)
-		);
-
 		$this->add_control(
-			'slides',
+			'banner_image',
 			array(
-				'label'       => esc_html__( 'Slides', 'kbfacade-elementor' ),
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $slides->get_controls(),
-				'default'     => array(
-					array( 'media_type' => 'image' ),
-					array( 'media_type' => 'image' ),
-				),
-				'title_field' => '{{{ media_type }}}',
+				'label' => esc_html__( 'Banner image', 'kbfacade-elementor' ),
+				'type'  => Controls_Manager::MEDIA,
+			)
+		);
+		$this->add_control(
+			'banner_link',
+			array(
+				'label' => esc_html__( 'Banner click URL', 'kbfacade-elementor' ),
+				'type'  => Controls_Manager::URL,
 			)
 		);
 
@@ -181,25 +144,6 @@ class Hero extends Widget_Base_Common {
 			)
 		);
 
-		$this->add_control(
-			'autoplay',
-			array(
-				'label'        => esc_html__( 'Autoplay', 'kbfacade-elementor' ),
-				'type'         => Controls_Manager::SWITCHER,
-				'return_value' => 'yes',
-				'default'      => 'yes',
-			)
-		);
-		$this->add_control(
-			'speed',
-			array(
-				'label'   => esc_html__( 'Autoplay interval (ms)', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::NUMBER,
-				'default' => 6000,
-				'min'     => 0,
-			)
-		);
-
 		$this->end_controls_section();
 	}
 
@@ -242,14 +186,38 @@ class Hero extends Widget_Base_Common {
 	}
 
 	/**
+	 * Resolve banner image and link from current or legacy slide settings.
+	 *
+	 * @param array $settings Widget settings.
+	 * @return array{image:array|string,link:array}
+	 */
+	private function resolve_banner( array $settings ) {
+		$image = ! empty( $settings['banner_image'] ) ? $settings['banner_image'] : array();
+		$link  = ! empty( $settings['banner_link'] ) ? (array) $settings['banner_link'] : array();
+
+		if ( empty( $image['url'] ) && ! empty( $settings['slides'][0]['image'] ) ) {
+			$image = $settings['slides'][0]['image'];
+		}
+		if ( empty( $link['url'] ) && ! empty( $settings['slides'][0]['link'] ) ) {
+			$link = (array) $settings['slides'][0]['link'];
+		}
+
+		return array(
+			'image' => $image,
+			'link'  => $link,
+		);
+	}
+
+	/**
 	 * @return void
 	 */
 	protected function render() {
 		$s             = $this->get_settings_for_display();
-		$fallback      = kbfacade_asset_url( 'assets/images/hero/hero-1.jpg' );
+		$banner        = $this->resolve_banner( $s );
+		$fallback      = kbfacade_asset_relative( 'assets/images/hero/hero-1.jpg' );
 		$icon_fallback = array(
-			kbfacade_theme_asset_url( 'images/icons/badges.svg' ),
-			kbfacade_theme_asset_url( 'images/icons/engineer.svg' ),
+			kbfacade_theme_asset_relative( 'images/icons/badges.svg' ),
+			kbfacade_theme_asset_relative( 'images/icons/engineer.svg' ),
 		);
 
 		// Backward compatibility: pages saved with a single `title` control.
@@ -276,8 +244,10 @@ class Hero extends Widget_Base_Common {
 				$line_3 = '';
 			}
 		}
+
+		$href = ! empty( $banner['link']['url'] ) ? $banner['link']['url'] : '';
 		?>
-		<section class="kbf-hero" data-kbf-slider data-autoplay="<?php echo esc_attr( $s['autoplay'] ); ?>" data-speed="<?php echo esc_attr( (string) $s['speed'] ); ?>">
+		<section class="kbf-hero">
 			<div class="kbf-container">
 				<div class="kbf-hero__top">
 					<h1 class="kbf-hero__title">
@@ -329,31 +299,24 @@ class Hero extends Widget_Base_Common {
 				</div>
 			</div>
 
-			<div class="kbf-hero__media" data-kbf-slider-track>
-				<?php foreach ( (array) $s['slides'] as $i => $slide ) : ?>
+			<div class="kbf-hero__media">
+				<figure class="kbf-hero__banner">
+					<?php if ( $href ) : ?>
+						<a href="<?php echo esc_url( $href ); ?>" <?php echo ! empty( $banner['link']['is_external'] ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
+					<?php endif; ?>
 					<?php
-					$href = ! empty( $slide['link']['url'] ) ? $slide['link']['url'] : '';
-					$url  = ! empty( $slide['image']['url'] ) ? $slide['image']['url'] : $fallback;
+					kbfacade_render_image(
+						$banner['image'],
+						$fallback,
+						'',
+						'',
+						'eager'
+					);
 					?>
-					<figure class="kbf-hero__slide<?php echo 0 === $i ? ' is-active' : ''; ?>" data-kbf-slide>
-						<?php if ( $href ) : ?>
-							<a href="<?php echo esc_url( $href ); ?>" <?php echo ! empty( $slide['link']['is_external'] ) ? 'target="_blank" rel="noopener noreferrer"' : ''; ?>>
-						<?php endif; ?>
-						<?php if ( 'video' === $slide['media_type'] && ! empty( $slide['video_url'] ) ) : ?>
-							<video src="<?php echo esc_url( $slide['video_url'] ); ?>" muted playsinline loop></video>
-						<?php else : ?>
-							<img src="<?php echo esc_url( $url ); ?>" alt="" loading="<?php echo 0 === $i ? 'eager' : 'lazy'; ?>" />
-						<?php endif; ?>
-						<?php if ( $href ) : ?>
-							</a>
-						<?php endif; ?>
-					</figure>
-				<?php endforeach; ?>
-			</div>
-
-			<div class="kbf-hero__controls">
-				<button type="button" class="kbf-slider__btn" data-kbf-prev aria-label="<?php esc_attr_e( 'Предыдущий слайд', 'kbfacade-elementor' ); ?>">‹</button>
-				<button type="button" class="kbf-slider__btn" data-kbf-next aria-label="<?php esc_attr_e( 'Следующий слайд', 'kbfacade-elementor' ); ?>">›</button>
+					<?php if ( $href ) : ?>
+						</a>
+					<?php endif; ?>
+				</figure>
 			</div>
 		</section>
 		<?php

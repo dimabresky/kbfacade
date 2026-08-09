@@ -105,9 +105,9 @@ class Gallery extends Widget_Base_Common {
 	protected function render() {
 		$s         = $this->get_settings_for_display();
 		$fallbacks = array(
-			kbfacade_asset_url( 'assets/images/gallery/gallery-1.jpg' ),
-			kbfacade_asset_url( 'assets/images/gallery/gallery-2.jpg' ),
-			kbfacade_asset_url( 'assets/images/gallery/gallery-3.jpg' ),
+			kbfacade_asset_relative( 'assets/images/gallery/gallery-1.jpg' ),
+			kbfacade_asset_relative( 'assets/images/gallery/gallery-2.jpg' ),
+			kbfacade_asset_relative( 'assets/images/gallery/gallery-3.jpg' ),
 		);
 		?>
 		<section class="kbf-gallery" data-kbf-gallery>
@@ -115,16 +115,19 @@ class Gallery extends Widget_Base_Common {
 				<div class="kbf-gallery__grid">
 					<?php foreach ( array_values( (array) $s['items'] ) as $index => $item ) : ?>
 						<?php
-						$url  = ! empty( $item['image']['url'] ) ? $item['image']['url'] : ( isset( $fallbacks[ $index ] ) ? $fallbacks[ $index ] : $fallbacks[0] );
-						$size = ! empty( $item['size'] ) ? $item['size'] : 'md';
+						$fallback = isset( $fallbacks[ $index ] ) ? $fallbacks[ $index ] : $fallbacks[0];
+						$size     = ! empty( $item['size'] ) ? $item['size'] : 'md';
+						$lightbox = ! empty( $item['image']['url'] )
+							? kbfacade_relative_url( $item['image']['url'] )
+							: $fallback;
 						?>
 						<button
 							type="button"
 							class="kbf-gallery__item kbf-gallery__item--<?php echo esc_attr( $size ); ?>"
-							data-kbf-lightbox-src="<?php echo esc_url( $url ); ?>"
+							data-kbf-lightbox-src="<?php echo esc_url( $lightbox ); ?>"
 							aria-label="<?php echo esc_attr( $item['caption'] ? $item['caption'] : __( 'Открыть изображение', 'kbfacade-elementor' ) ); ?>"
 						>
-							<img src="<?php echo esc_url( $url ); ?>" alt="<?php echo esc_attr( $item['caption'] ); ?>" loading="lazy" />
+							<?php kbfacade_render_image( $item['image'], $fallback, $item['caption'] ); ?>
 						</button>
 					<?php endforeach; ?>
 				</div>

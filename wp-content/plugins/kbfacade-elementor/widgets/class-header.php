@@ -123,7 +123,7 @@ class Header extends Widget_Base_Common {
 	 */
 	protected function render() {
 		$s         = $this->get_settings_for_display();
-		$logo_url  = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-grey.png' );
+		$logo_fallback = kbfacade_theme_asset_relative( 'images/logo/kbfacade-grey.png' );
 		$logo_href = ! empty( $s['logo_link']['url'] ) ? $s['logo_link']['url'] : home_url( '/' );
 		$phones    = Settings::get_phones();
 		$email     = Settings::get_email();
@@ -131,7 +131,7 @@ class Header extends Widget_Base_Common {
 		<header class="kbf-header" data-kbf-header>
 			<div class="kbf-container kbf-header__inner">
 				<a class="kbf-header__logo" href="<?php echo esc_url( $logo_href ); ?>">
-					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php esc_attr_e( 'КБФасад', 'kbfacade-elementor' ); ?>" />
+					<?php kbfacade_render_image( $s['logo'], $logo_fallback, __( 'КБФасад', 'kbfacade-elementor' ) ); ?>
 				</a>
 
 				<div class="kbf-header__aside">

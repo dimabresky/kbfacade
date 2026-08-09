@@ -122,11 +122,8 @@ class Footer extends Widget_Base_Common {
 	 */
 	protected function render() {
 		$s      = $this->get_settings_for_display();
-		$logo   = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-white.png' );
-		$side   = ! empty( $s['side_image']['url'] ) ? $s['side_image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.png' );
-		if ( ! file_exists( KBFACADE_ELEMENTOR_PATH . 'assets/images/cta/worker.png' ) ) {
-			$side = ! empty( $s['side_image']['url'] ) ? $s['side_image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
-		}
+		$logo_fallback = kbfacade_theme_asset_relative( 'images/logo/kbfacade-white.png' );
+		$side_fallback = kbfacade_worker_fallback_relative();
 		$phones = Settings::get_phones();
 		$email  = Settings::get_email();
 		$social = Settings::get_social();
@@ -135,10 +132,10 @@ class Footer extends Widget_Base_Common {
 			<div class="kbf-footer__bar"><?php echo esc_html( $s['slogan'] ); ?></div>
 			<div class="kbf-container kbf-footer__inner">
 				<div class="kbf-footer__media">
-					<img src="<?php echo esc_url( $side ); ?>" alt="" loading="lazy" />
+					<?php kbfacade_render_image( $s['side_image'], $side_fallback ); ?>
 				</div>
 				<div class="kbf-footer__center">
-					<img class="kbf-footer__logo" src="<?php echo esc_url( $logo ); ?>" alt="<?php esc_attr_e( 'КБФасад', 'kbfacade-elementor' ); ?>" />
+					<?php kbfacade_render_image( $s['logo'], $logo_fallback, __( 'КБФасад', 'kbfacade-elementor' ), 'kbf-footer__logo' ); ?>
 					<nav class="kbf-footer__nav" aria-label="<?php esc_attr_e( 'Навигация в подвале', 'kbfacade-elementor' ); ?>">
 						<?php foreach ( (array) $s['nav_items'] as $item ) : ?>
 							<a href="<?php echo esc_url( $item['anchor'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>

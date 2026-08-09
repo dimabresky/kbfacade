@@ -233,12 +233,11 @@ class Slider extends Widget_Base_Common {
 						<?php foreach ( array_values( (array) $items ) as $index => $item ) : ?>
 							<?php
 							$asset_index = ( $index % $asset_count ) + 1;
-							$fallback    = kbfacade_asset_url( 'assets/images/' . $dir . $asset_index . '.jpg' );
-							$url         = ! empty( $item['image']['url'] ) ? $item['image']['url'] : $fallback;
+							$fallback = kbfacade_asset_relative( 'assets/images/' . $dir . $asset_index . '.jpg' );
 							?>
 							<article class="kbf-carousel__item" tabindex="0">
 								<div class="kbf-carousel__media">
-									<img src="<?php echo esc_url( $url ); ?>" alt="<?php echo esc_attr( $item['title'] ); ?>" loading="lazy" />
+									<?php kbfacade_render_image( $item['image'], $fallback, $item['title'] ); ?>
 									<div class="kbf-carousel__overlay">
 										<?php if ( 'title_description' === $s['overlay_mode'] ) : ?>
 											<strong><?php echo esc_html( $item['title'] ); ?></strong>

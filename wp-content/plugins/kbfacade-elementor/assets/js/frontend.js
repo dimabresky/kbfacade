@@ -75,66 +75,6 @@
 		});
 	}
 
-	function initHeroSlider(root) {
-		var slides = qsa(root, '[data-kbf-slide]');
-		if (!slides.length) {
-			return;
-		}
-
-		var index = 0;
-		var timer = null;
-		var autoplay = root.getAttribute('data-autoplay') === 'yes' && !reducedMotion;
-		var speed = parseInt(root.getAttribute('data-speed') || '6000', 10);
-
-		function show(next) {
-			slides[index].classList.remove('is-active');
-			index = (next + slides.length) % slides.length;
-			slides[index].classList.add('is-active');
-			var video = qs(slides[index], 'video');
-			if (video) {
-				video.play().catch(function () {});
-			}
-		}
-
-		function stop() {
-			if (timer) {
-				window.clearInterval(timer);
-				timer = null;
-			}
-		}
-
-		function start() {
-			stop();
-			if (!autoplay || speed <= 0) {
-				return;
-			}
-			timer = window.setInterval(function () {
-				show(index + 1);
-			}, speed);
-		}
-
-		var prev = qs(root, '[data-kbf-prev]');
-		var next = qs(root, '[data-kbf-next]');
-		if (prev) {
-			prev.addEventListener('click', function () {
-				show(index - 1);
-				start();
-			});
-		}
-		if (next) {
-			next.addEventListener('click', function () {
-				show(index + 1);
-				start();
-			});
-		}
-
-		root.addEventListener('mouseenter', stop);
-		root.addEventListener('mouseleave', start);
-		root.addEventListener('focusin', stop);
-		root.addEventListener('focusout', start);
-		start();
-	}
-
 	function initCarousel(root) {
 		var track = qs(root, '[data-kbf-carousel-track]');
 		if (!track) {
@@ -340,7 +280,6 @@
 
 	function boot() {
 		qsa(document, '[data-kbf-header]').forEach(initHeader);
-		qsa(document, '[data-kbf-slider]').forEach(initHeroSlider);
 		qsa(document, '[data-kbf-carousel]').forEach(initCarousel);
 		qsa(document, '[data-kbf-catalog]').forEach(initCatalog);
 		qsa(document, '[data-kbf-gallery]').forEach(initGallery);
