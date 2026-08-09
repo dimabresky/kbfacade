@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "title": "КБФасад Landing",
   "type": "page",
   "page_settings": {
@@ -84,8 +84,8 @@
               "widgetType": "kbf-benefits",
               "settings": {
                 "preset": "developers",
-                "title": "КБФасад — для девелоперов:",
-                "lead": "Сокращение сроков строительства и бюджета проекта + снижение рисков + увеличение полезной площади здания"
+                "title": "КБФасад - для девелоперов:",
+                "lead": ""
               }
             }
           ]
@@ -105,8 +105,8 @@
               "widgetType": "kbf-benefits",
               "settings": {
                 "preset": "builders",
-                "title": "КБФасад — для строителей:",
-                "lead": "Минимум операций на объекте + удобный монтаж + быстрый переход к чистовой отделке"
+                "title": "КБФасад - для строителей:",
+                "lead": ""
               }
             }
           ]
@@ -230,5 +230,5 @@
       ]
     }
   ],
-  "note": "Preferred install path: WP Admin → Tools → КБФасад Landing. This JSON mirrors the section order for Elementor import / documentation."
+  "note": "Contacts are global (Settings → КБФасад). Preferred install: Tools → КБФасад Landing."
 }

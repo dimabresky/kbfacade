@@ -53,6 +53,8 @@ Thumbs.db
 *.tmp
 *.bak
 
-# Heavy editable design sources (PNG/SVG/TTF and preview remain tracked)
+# Large design sources stay local (GitHub soft/hard size limits).
 developer-stuff/**/*.psd
-developer-stuff/**/*.PSD
+developer-stuff/tools/**/node_modules/
+developer-stuff/tools/**/_debug/
+developer-stuff/tools/psd-texts.txt

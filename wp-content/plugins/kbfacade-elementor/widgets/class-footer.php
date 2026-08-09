@@ -9,13 +9,14 @@ namespace KBFacadeElementor\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Repeater;
+use KBFacadeElementor\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Dark site footer.
+ * Dark site footer. Contacts come from global Settings.
  */
 class Footer extends Widget_Base_Common {
 
@@ -96,42 +97,20 @@ class Footer extends Widget_Base_Common {
 			)
 		);
 
-		$phones = new Repeater();
-		$phones->add_control(
-			'phone',
-			array(
-				'label' => esc_html__( 'Phone', 'kbfacade-elementor' ),
-				'type'  => Controls_Manager::TEXT,
-			)
-		);
-		$this->add_control(
-			'phones',
-			array(
-				'label'       => esc_html__( 'Phones', 'kbfacade-elementor' ),
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $phones->get_controls(),
-				'default'     => array(
-					array( 'phone' => '+375 44 777-96-96' ),
-					array( 'phone' => '+375 17 294-96-96' ),
-				),
-				'title_field' => '{{{ phone }}}',
-			)
-		);
-
-		$this->add_control(
-			'email',
-			array(
-				'label'   => esc_html__( 'Email', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => 'sales@pkdfasad.by',
-			)
-		);
 		$this->add_control(
 			'cta_label',
 			array(
 				'label'   => esc_html__( 'CTA label', 'kbfacade-elementor' ),
 				'type'    => Controls_Manager::TEXT,
 				'default' => 'Консультация',
+			)
+		);
+		$this->add_control(
+			'contacts_note',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => esc_html__( 'Телефоны, email и соцсети берутся из Settings → КБФасад.', 'kbfacade-elementor' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			)
 		);
 
@@ -142,9 +121,15 @@ class Footer extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s         = $this->get_settings_for_display();
-		$logo      = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-white.png' );
-		$side      = ! empty( $s['side_image']['url'] ) ? $s['side_image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
+		$s      = $this->get_settings_for_display();
+		$logo   = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-white.png' );
+		$side   = ! empty( $s['side_image']['url'] ) ? $s['side_image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.png' );
+		if ( ! file_exists( KBFACADE_ELEMENTOR_PATH . 'assets/images/cta/worker.png' ) ) {
+			$side = ! empty( $s['side_image']['url'] ) ? $s['side_image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
+		}
+		$phones = Settings::get_phones();
+		$email  = Settings::get_email();
+		$social = Settings::get_social();
 		?>
 		<footer class="kbf-footer">
 			<div class="kbf-footer__bar"><?php echo esc_html( $s['slogan'] ); ?></div>
@@ -161,12 +146,21 @@ class Footer extends Widget_Base_Common {
 					</nav>
 				</div>
 				<div class="kbf-footer__contacts">
-					<?php foreach ( (array) $s['phones'] as $item ) : ?>
-						<?php $tel = preg_replace( '/[^\d+]/', '', $item['phone'] ); ?>
-						<a href="tel:<?php echo esc_attr( $tel ); ?>"><?php echo esc_html( $item['phone'] ); ?></a>
+					<?php foreach ( $phones as $phone ) : ?>
+						<a href="tel:<?php echo esc_attr( kbfacade_tel_href( $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
 					<?php endforeach; ?>
-					<?php if ( ! empty( $s['email'] ) ) : ?>
-						<a href="mailto:<?php echo esc_attr( $s['email'] ); ?>"><?php echo esc_html( $s['email'] ); ?></a>
+					<?php if ( $email ) : ?>
+						<a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
+					<?php endif; ?>
+					<?php if ( ! empty( $social ) ) : ?>
+						<div class="kbf-footer__social">
+							<?php foreach ( $social as $item ) : ?>
+								<?php if ( empty( $item['url'] ) ) { continue; } ?>
+								<a href="<?php echo esc_url( $item['url'] ); ?>" target="_blank" rel="noopener noreferrer">
+									<?php echo esc_html( $item['label'] ? $item['label'] : $item['url'] ); ?>
+								</a>
+							<?php endforeach; ?>
+						</div>
 					<?php endif; ?>
 					<button type="button" class="kbf-btn kbf-btn--orange" data-kbf-open-modal>
 						<?php echo esc_html( $s['cta_label'] ); ?>

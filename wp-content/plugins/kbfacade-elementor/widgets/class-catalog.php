@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Offer / catalog section.
+ * Offer / catalog section (text cards with borders, no icons by default).
  */
 class Catalog extends Widget_Base_Common {
 
@@ -88,13 +88,6 @@ class Catalog extends Widget_Base_Common {
 
 		$items = new Repeater();
 		$items->add_control(
-			'icon',
-			array(
-				'label' => esc_html__( 'Icon', 'kbfacade-elementor' ),
-				'type'  => Controls_Manager::MEDIA,
-			)
-		);
-		$items->add_control(
 			'title',
 			array(
 				'label'   => esc_html__( 'Title', 'kbfacade-elementor' ),
@@ -120,31 +113,31 @@ class Catalog extends Widget_Base_Common {
 				'default'     => array(
 					array(
 						'title' => 'Фиброцементные плиты',
-						'text'  => 'Долговечная облицовка с высокой устойчивостью к влаге, УФ и перепадам температур.',
+						'text'  => 'Практичный, натуральный, экологичный материал для оформления фасада здания. В основе цемент, армирующие волокна целлюлозы, минеральные наполнители',
 					),
 					array(
 						'title' => 'Декоративный камень',
-						'text'  => 'Натуральный и искусственный камень для статусных архитектурных решений.',
+						'text'  => 'Отлично передает фактуру природного материала, при этом легче натуального камня и проще в использовании. Подходит для реализации проектов в различных архитектурных стилях',
 					),
 					array(
 						'title' => 'Керамогранит',
-						'text'  => 'Точная геометрия, богатый выбор форматов и надёжные системы крепления.',
+						'text'  => 'Материал на основе натуральный компонентов. В составе: кварцевый песок, полевой шпат, природные пигменты',
 					),
 					array(
 						'title' => 'Металлическая плита',
-						'text'  => 'Лёгкие металлические панели для динамичных и технологичных фасадов.',
+						'text'  => 'Современный экономичный материал, предназначенный для обустройства вентилируемых фасадов. Имеет небольшой вес, произвольные габариты, а самое главное, простой монтаж',
 					),
 					array(
 						'title' => 'Линеарные панели',
-						'text'  => 'Горизонтальный и вертикальный ритм, быстрый монтаж и аккуратные стыки.',
+						'text'  => 'Создают четкие горизонтальные и вертикальные линии, придающие зданию архитектурную выразительность. Обеспечивают оптимальный воздушный зазор',
 					),
 					array(
 						'title' => 'Фасадные ламели',
-						'text'  => 'Солнцезащита и выразительная пластика для общественных и коммерческих объектов.',
+						'text'  => 'Формируют современный, динамичный облик здания, одновременно решая задачи солнцезащиты и вентиляции фасада. Очень долговечны за счет устойчивости к коррозии. При этом максимально легкие конструкции',
 					),
 					array(
 						'title' => 'Фальцевые панели',
-						'text'  => 'Современная металлическая эстетика с высокой герметичностью облицовки.',
+						'text'  => 'Обладают особыми замками-фальцами на краях. при монтаже они сцепляются между собой, создавая идеально ровную. герметичную поверхность без видимых саморезов',
 					),
 				),
 				'title_field' => '{{{ title }}}',
@@ -158,9 +151,8 @@ class Catalog extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s             = $this->get_settings_for_display();
-		$initial       = max( 1, (int) $s['initial_count'] );
-		$icon_fallback = kbfacade_theme_asset_url( 'images/icons/best-price.svg' );
+		$s       = $this->get_settings_for_display();
+		$initial = max( 1, (int) $s['initial_count'] );
 		?>
 		<section class="kbf-catalog" id="catalog" data-kbf-catalog data-initial="<?php echo esc_attr( (string) $initial ); ?>">
 			<div class="kbf-container">
@@ -170,15 +162,14 @@ class Catalog extends Widget_Base_Common {
 				</div>
 				<div class="kbf-catalog__grid">
 					<?php foreach ( array_values( (array) $s['items'] ) as $index => $item ) : ?>
-						<article class="kbf-catalog__item<?php echo $index >= $initial ? ' is-collapsed' : ''; ?>" <?php echo $index >= $initial ? 'hidden' : ''; ?>>
-							<?php kbfacade_render_image( $item['icon'], $icon_fallback, '', 'kbf-catalog__icon' ); ?>
+						<article class="kbf-card kbf-catalog__item<?php echo $index >= $initial ? ' is-collapsed' : ''; ?>" <?php echo $index >= $initial ? 'hidden' : ''; ?>>
 							<h3><?php echo esc_html( $item['title'] ); ?></h3>
 							<p><?php echo esc_html( $item['text'] ); ?></p>
 						</article>
 					<?php endforeach; ?>
 				</div>
 				<?php if ( count( (array) $s['items'] ) > $initial ) : ?>
-					<button type="button" class="kbf-catalog__more" data-kbf-catalog-more>
+					<button type="button" class="kbf-more" data-kbf-catalog-more>
 						<?php echo esc_html( $s['more_label'] ); ?>
 					</button>
 				<?php endif; ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Clickable masonry gallery with lightbox.
+ * Clickable gallery with lightbox (landscape 1:1:2 row).
  *
  * @package KBFacadeElementor
  */
@@ -37,7 +37,7 @@ class Gallery extends Widget_Base_Common {
 	 * @return string
 	 */
 	public function get_icon() {
-		return 'eicon-gallery-masonry';
+		return 'eicon-gallery-justified';
 	}
 
 	/**
@@ -67,9 +67,9 @@ class Gallery extends Widget_Base_Common {
 				'type'    => Controls_Manager::SELECT,
 				'default' => 'md',
 				'options' => array(
-					'sm' => 'Small',
-					'md' => 'Medium',
-					'lg' => 'Large',
+					'sm' => '1 part',
+					'md' => '1 part',
+					'lg' => '2 parts',
 				),
 			)
 		);
@@ -88,7 +88,7 @@ class Gallery extends Widget_Base_Common {
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $items->get_controls(),
 				'default'     => array(
-					array( 'size' => 'lg', 'caption' => 'Стеклянный фасад' ),
+					array( 'size' => 'sm', 'caption' => 'Стеклянный фасад' ),
 					array( 'size' => 'md', 'caption' => 'Цветные панели' ),
 					array( 'size' => 'lg', 'caption' => 'Современный офис' ),
 				),
@@ -115,7 +115,7 @@ class Gallery extends Widget_Base_Common {
 				<div class="kbf-gallery__grid">
 					<?php foreach ( array_values( (array) $s['items'] ) as $index => $item ) : ?>
 						<?php
-						$url = ! empty( $item['image']['url'] ) ? $item['image']['url'] : ( isset( $fallbacks[ $index ] ) ? $fallbacks[ $index ] : $fallbacks[0] );
+						$url  = ! empty( $item['image']['url'] ) ? $item['image']['url'] : ( isset( $fallbacks[ $index ] ) ? $fallbacks[ $index ] : $fallbacks[0] );
 						$size = ! empty( $item['size'] ) ? $item['size'] : 'md';
 						?>
 						<button

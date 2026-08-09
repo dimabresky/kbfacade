@@ -78,3 +78,13 @@ function kbfacade_render_image( $image, $fallback = '', $alt = '', $class = '' )
 function kbfacade_element_id() {
 	return substr( md5( uniqid( (string) wp_rand(), true ) ), 0, 7 );
 }
+
+/**
+ * Normalize a phone string for tel: links.
+ *
+ * @param string $phone Display phone.
+ * @return string
+ */
+function kbfacade_tel_href( $phone ) {
+	return preg_replace( '/[^\d+]/', '', (string) $phone );
+}

@@ -53,11 +53,27 @@ class Hero extends Widget_Base_Common {
 		);
 
 		$this->add_control(
-			'title',
+			'title_line_1',
 			array(
-				'label'   => esc_html__( 'Title', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXTAREA,
-				'default' => 'Искусство преображения вашего объекта',
+				'label'   => esc_html__( 'Title line 1', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => 'Искусство',
+			)
+		);
+		$this->add_control(
+			'title_line_2',
+			array(
+				'label'   => esc_html__( 'Title line 2', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => 'преображения',
+			)
+		);
+		$this->add_control(
+			'title_line_3',
+			array(
+				'label'   => esc_html__( 'Title line 3', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => 'Вашего объекта',
 			)
 		);
 
@@ -122,11 +138,27 @@ class Hero extends Widget_Base_Common {
 			)
 		);
 		$facts->add_control(
+			'value',
+			array(
+				'label'   => esc_html__( 'Value', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => '350+',
+			)
+		);
+		$facts->add_control(
+			'label',
+			array(
+				'label'   => esc_html__( 'Label', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXTAREA,
+				'default' => "реализованных\nпроектов",
+			)
+		);
+		$facts->add_control(
 			'text',
 			array(
-				'label'   => esc_html__( 'Text', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXTAREA,
-				'default' => '350+ реализованных проектов',
+				'label'       => esc_html__( 'Text (legacy)', 'kbfacade-elementor' ),
+				'type'        => Controls_Manager::TEXTAREA,
+				'description' => esc_html__( 'Устаревшее поле; используйте Value и Label.', 'kbfacade-elementor' ),
 			)
 		);
 		$this->add_control(
@@ -136,10 +168,16 @@ class Hero extends Widget_Base_Common {
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $facts->get_controls(),
 				'default'     => array(
-					array( 'text' => '350+ реализованных проектов' ),
-					array( 'text' => '28 инженеров-проектировщиков в штате' ),
+					array(
+						'value' => '350+',
+						'label' => "реализованных\nпроектов",
+					),
+					array(
+						'value' => '28',
+						'label' => "инженеров-\nпроектировщиков\nв штате",
+					),
 				),
-				'title_field' => '{{{ text }}}',
+				'title_field' => '{{{ value }}}',
 			)
 		);
 
@@ -166,33 +204,128 @@ class Hero extends Widget_Base_Common {
 	}
 
 	/**
+	 * Normalize fact repeater row to value + multiline label.
+	 *
+	 * @param array $fact Raw repeater row.
+	 * @return array{value:string,label:string}
+	 */
+	private function normalize_fact( array $fact ) {
+		$value = isset( $fact['value'] ) ? trim( (string) $fact['value'] ) : '';
+		$label = isset( $fact['label'] ) ? trim( (string) $fact['label'] ) : '';
+
+		if ( $value || $label ) {
+			return array(
+				'value' => $value,
+				'label' => $label,
+			);
+		}
+
+		$text = isset( $fact['text'] ) ? trim( (string) $fact['text'] ) : '';
+		if ( '' === $text ) {
+			return array(
+				'value' => '',
+				'label' => '',
+			);
+		}
+
+		if ( preg_match( '/^(\S+)\s+(.*)$/us', $text, $matches ) ) {
+			return array(
+				'value' => trim( $matches[1] ),
+				'label' => trim( $matches[2] ),
+			);
+		}
+
+		return array(
+			'value' => $text,
+			'label' => '',
+		);
+	}
+
+	/**
 	 * @return void
 	 */
 	protected function render() {
-		$s      = $this->get_settings_for_display();
-		$fallback = kbfacade_asset_url( 'assets/images/hero/hero-1.jpg' );
+		$s             = $this->get_settings_for_display();
+		$fallback      = kbfacade_asset_url( 'assets/images/hero/hero-1.jpg' );
 		$icon_fallback = array(
 			kbfacade_theme_asset_url( 'images/icons/badges.svg' ),
 			kbfacade_theme_asset_url( 'images/icons/engineer.svg' ),
 		);
+
+		// Backward compatibility: pages saved with a single `title` control.
+		$legacy_title = isset( $s['title'] ) ? trim( (string) $s['title'] ) : '';
+		$line_1       = isset( $s['title_line_1'] ) ? (string) $s['title_line_1'] : '';
+		$line_2       = isset( $s['title_line_2'] ) ? (string) $s['title_line_2'] : '';
+		$line_3       = isset( $s['title_line_3'] ) ? (string) $s['title_line_3'] : '';
+		$composed     = trim( preg_replace( '/\s+/u', ' ', $line_1 . ' ' . $line_2 . ' ' . $line_3 ) );
+		$legacy_flat  = trim( preg_replace( '/\s+/u', ' ', $legacy_title ) );
+		if ( $legacy_title && $legacy_flat && $legacy_flat !== $composed ) {
+			$parts = preg_split( '/\r\n|\r|\n/', $legacy_title );
+			$parts = array_values( array_filter( array_map( 'trim', (array) $parts ), 'strlen' ) );
+			if ( count( $parts ) >= 3 ) {
+				$line_1 = $parts[0];
+				$line_2 = $parts[1];
+				$line_3 = implode( ' ', array_slice( $parts, 2 ) );
+			} elseif ( 2 === count( $parts ) ) {
+				$line_1 = $parts[0];
+				$line_2 = $parts[1];
+				$line_3 = '';
+			} else {
+				$line_1 = $legacy_title;
+				$line_2 = '';
+				$line_3 = '';
+			}
+		}
 		?>
 		<section class="kbf-hero" data-kbf-slider data-autoplay="<?php echo esc_attr( $s['autoplay'] ); ?>" data-speed="<?php echo esc_attr( (string) $s['speed'] ); ?>">
-			<div class="kbf-container kbf-hero__top">
-				<h1 class="kbf-hero__title"><?php echo esc_html( $s['title'] ); ?></h1>
-				<div class="kbf-hero__facts">
-					<?php foreach ( array_values( (array) $s['facts'] ) as $index => $fact ) : ?>
-						<div class="kbf-hero__fact">
+			<div class="kbf-container">
+				<div class="kbf-hero__top">
+					<h1 class="kbf-hero__title">
+						<?php if ( $line_1 ) : ?><span class="kbf-hero__title-line"><?php echo esc_html( $line_1 ); ?></span><?php endif; ?>
+						<?php if ( $line_2 ) : ?><span class="kbf-hero__title-line kbf-hero__title-line--muted"><?php echo esc_html( $line_2 ); ?></span><?php endif; ?>
+					</h1>
+					<div class="kbf-hero__facts">
+						<?php foreach ( array_values( (array) $s['facts'] ) as $index => $fact ) : ?>
 							<?php
-							kbfacade_render_image(
-								$fact['icon'],
-								isset( $icon_fallback[ $index ] ) ? $icon_fallback[ $index ] : $icon_fallback[0],
-								'',
-								'kbf-hero__fact-icon'
-							);
+							$fact_data = $this->normalize_fact( (array) $fact );
+							$lines     = preg_split( '/\r\n|\r|\n/', $fact_data['label'] );
+							$lines     = array_values( array_filter( array_map( 'trim', (array) $lines ), 'strlen' ) );
 							?>
-							<p><?php echo esc_html( $fact['text'] ); ?></p>
+							<div class="kbf-hero__fact">
+								<?php
+								kbfacade_render_image(
+									$fact['icon'],
+									isset( $icon_fallback[ $index ] ) ? $icon_fallback[ $index ] : $icon_fallback[0],
+									'',
+									'kbf-hero__fact-icon'
+								);
+								?>
+								<div class="kbf-hero__fact-text">
+									<?php if ( $fact_data['value'] ) : ?>
+										<span class="kbf-hero__fact-value"><?php echo esc_html( $fact_data['value'] ); ?></span>
+									<?php endif; ?>
+									<?php if ( ! empty( $lines ) ) : ?>
+										<span class="kbf-hero__fact-label">
+											<?php
+											foreach ( $lines as $line_index => $line ) {
+												if ( $line_index > 0 ) {
+													echo '<br>';
+												}
+												echo esc_html( $line );
+											}
+											?>
+										</span>
+									<?php endif; ?>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</div>
+					<?php if ( $line_3 ) : ?>
+						<div class="kbf-hero__title-row">
+							<span class="kbf-hero__title-line kbf-hero__title-line--sub"><?php echo esc_html( $line_3 ); ?></span>
+							<span class="kbf-hero__title-line-rule" aria-hidden="true"></span>
 						</div>
-					<?php endforeach; ?>
+					<?php endif; ?>
 				</div>
 			</div>
 

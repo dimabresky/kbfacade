@@ -9,13 +9,15 @@ namespace KBFacadeElementor\Widgets;
 
 use Elementor\Controls_Manager;
 use Elementor\Repeater;
+use KBFacadeElementor\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Sticky-style header with burger, phones and consultation CTA.
+ * Sticky-style header with burger and consultation CTA.
+ * Phones/email always come from global Settings.
  */
 class Header extends Widget_Base_Common {
 
@@ -87,8 +89,8 @@ class Header extends Widget_Base_Common {
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater->get_controls(),
 				'default'     => array(
-					array( 'label' => 'Каталог', 'anchor' => '#catalog' ),
-					array( 'label' => 'Объекты', 'anchor' => '#objects' ),
+					array( 'label' => 'Материал облицовки', 'anchor' => '#catalog' ),
+					array( 'label' => 'Проекты', 'anchor' => '#objects' ),
 					array( 'label' => 'Услуги', 'anchor' => '#services' ),
 					array( 'label' => 'Контакты', 'anchor' => '#contacts' ),
 				),
@@ -96,43 +98,20 @@ class Header extends Widget_Base_Common {
 			)
 		);
 
-		$phones = new Repeater();
-		$phones->add_control(
-			'phone',
-			array(
-				'label'   => esc_html__( 'Phone', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => '+375 44 777-96-96',
-			)
-		);
-		$this->add_control(
-			'phones',
-			array(
-				'label'       => esc_html__( 'Phones', 'kbfacade-elementor' ),
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $phones->get_controls(),
-				'default'     => array(
-					array( 'phone' => '+375 44 777-96-96' ),
-					array( 'phone' => '+375 17 294-96-96' ),
-				),
-				'title_field' => '{{{ phone }}}',
-			)
-		);
-
-		$this->add_control(
-			'email',
-			array(
-				'label'   => esc_html__( 'Email', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => 'sales@pkdfasad.by',
-			)
-		);
 		$this->add_control(
 			'cta_label',
 			array(
 				'label'   => esc_html__( 'CTA label', 'kbfacade-elementor' ),
 				'type'    => Controls_Manager::TEXT,
 				'default' => 'Заказать консультацию',
+			)
+		);
+		$this->add_control(
+			'contacts_note',
+			array(
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => esc_html__( 'Телефоны и email берутся из Settings → КБФасад.', 'kbfacade-elementor' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			)
 		);
 
@@ -146,6 +125,8 @@ class Header extends Widget_Base_Common {
 		$s         = $this->get_settings_for_display();
 		$logo_url  = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-grey.png' );
 		$logo_href = ! empty( $s['logo_link']['url'] ) ? $s['logo_link']['url'] : home_url( '/' );
+		$phones    = Settings::get_phones();
+		$email     = Settings::get_email();
 		?>
 		<header class="kbf-header" data-kbf-header>
 			<div class="kbf-container kbf-header__inner">
@@ -153,25 +134,44 @@ class Header extends Widget_Base_Common {
 					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php esc_attr_e( 'КБФасад', 'kbfacade-elementor' ); ?>" />
 				</a>
 
-				<nav class="kbf-header__nav" data-kbf-nav aria-label="<?php esc_attr_e( 'Основная навигация', 'kbfacade-elementor' ); ?>">
-					<?php foreach ( (array) $s['nav_items'] as $item ) : ?>
-						<a href="<?php echo esc_url( $item['anchor'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
-					<?php endforeach; ?>
-				</nav>
-
-				<div class="kbf-header__contacts">
-					<div class="kbf-header__phones">
-						<?php foreach ( (array) $s['phones'] as $item ) : ?>
-							<?php $tel = preg_replace( '/[^\d+]/', '', $item['phone'] ); ?>
-							<a href="tel:<?php echo esc_attr( $tel ); ?>"><?php echo esc_html( $item['phone'] ); ?></a>
+				<div class="kbf-header__aside">
+					<nav class="kbf-header__nav" data-kbf-nav aria-label="<?php esc_attr_e( 'Основная навигация', 'kbfacade-elementor' ); ?>">
+						<?php foreach ( array_values( (array) $s['nav_items'] ) as $index => $item ) : ?>
+							<a
+								class="<?php echo 0 === $index ? 'is-active' : ''; ?>"
+								href="<?php echo esc_url( $item['anchor'] ); ?>"
+							><?php echo esc_html( $item['label'] ); ?></a>
 						<?php endforeach; ?>
+					</nav>
+
+					<div class="kbf-header__contacts">
+						<div class="kbf-header__phones">
+							<?php foreach ( $phones as $phone ) : ?>
+								<a class="kbf-header__phone" href="tel:<?php echo esc_attr( kbfacade_tel_href( $phone ) ); ?>">
+									<span class="kbf-header__contact-icon" aria-hidden="true">
+										<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M3.1 1.5h2.2l.8 2-1.3 1c.7 1.4 1.9 2.6 3.3 3.3l1-1.3 2 .8v2.2c0 .6-.5 1.1-1.1 1.1C5.5 10.6 1.5 6.6 1.5 2.6c0-.6.5-1.1 1.1-1.1Z" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+										</svg>
+									</span>
+									<?php echo esc_html( $phone ); ?>
+								</a>
+							<?php endforeach; ?>
+						</div>
+						<?php if ( $email ) : ?>
+							<a class="kbf-header__email" href="mailto:<?php echo esc_attr( $email ); ?>">
+								<span class="kbf-header__contact-icon" aria-hidden="true">
+									<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<rect x="1.5" y="3" width="11" height="8" rx="1" stroke="currentColor" stroke-width="1.1"/>
+										<path d="M1.5 4.5 7 8.2l5.5-3.7" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								</span>
+								<?php echo esc_html( $email ); ?>
+							</a>
+						<?php endif; ?>
+						<button type="button" class="kbf-btn kbf-btn--dark kbf-header__cta" data-kbf-open-modal>
+							<?php echo esc_html( $s['cta_label'] ); ?>
+						</button>
 					</div>
-					<?php if ( ! empty( $s['email'] ) ) : ?>
-						<a class="kbf-header__email" href="mailto:<?php echo esc_attr( $s['email'] ); ?>"><?php echo esc_html( $s['email'] ); ?></a>
-					<?php endif; ?>
-					<button type="button" class="kbf-btn kbf-btn--dark kbf-header__cta" data-kbf-open-modal>
-						<?php echo esc_html( $s['cta_label'] ); ?>
-					</button>
 				</div>
 
 				<button type="button" class="kbf-header__burger" data-kbf-burger aria-expanded="false" aria-controls="kbf-mobile-panel">
@@ -187,49 +187,18 @@ class Header extends Widget_Base_Common {
 					<?php endforeach; ?>
 				</nav>
 				<div class="kbf-header__mobile-contacts">
-					<?php foreach ( (array) $s['phones'] as $item ) : ?>
-						<?php $tel = preg_replace( '/[^\d+]/', '', $item['phone'] ); ?>
-						<a href="tel:<?php echo esc_attr( $tel ); ?>"><?php echo esc_html( $item['phone'] ); ?></a>
+					<?php foreach ( $phones as $phone ) : ?>
+						<a href="tel:<?php echo esc_attr( kbfacade_tel_href( $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
 					<?php endforeach; ?>
+					<?php if ( $email ) : ?>
+						<a href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
+					<?php endif; ?>
 					<button type="button" class="kbf-btn kbf-btn--orange" data-kbf-open-modal>
 						<?php echo esc_html( $s['cta_label'] ); ?>
 					</button>
 				</div>
 			</div>
 		</header>
-
-		<div class="kbf-modal" data-kbf-modal hidden>
-			<div class="kbf-modal__backdrop" data-kbf-close-modal></div>
-			<div class="kbf-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="kbf-modal-title">
-				<button type="button" class="kbf-modal__close" data-kbf-close-modal aria-label="<?php esc_attr_e( 'Закрыть', 'kbfacade-elementor' ); ?>">×</button>
-				<h2 id="kbf-modal-title"><?php esc_html_e( 'Заказать консультацию', 'kbfacade-elementor' ); ?></h2>
-				<form class="kbf-form kbf-form--modal" data-kbf-form data-form-type="modal" novalidate>
-					<label>
-						<span><?php esc_html_e( 'Наименование организации', 'kbfacade-elementor' ); ?></span>
-						<input type="text" name="company" autocomplete="organization" />
-					</label>
-					<label>
-						<span><?php esc_html_e( 'Имя', 'kbfacade-elementor' ); ?> *</span>
-						<input type="text" name="name" required autocomplete="name" />
-					</label>
-					<label>
-						<span><?php esc_html_e( 'Контактный номер', 'kbfacade-elementor' ); ?> *</span>
-						<input type="tel" name="phone" required autocomplete="tel" />
-					</label>
-					<label>
-						<span><?php esc_html_e( 'Ваш email', 'kbfacade-elementor' ); ?></span>
-						<input type="email" name="email" autocomplete="email" />
-					</label>
-					<label class="kbf-form__consent">
-						<input type="checkbox" name="consent" value="1" required />
-						<span><?php esc_html_e( 'Согласен(на) на обработку персональных данных', 'kbfacade-elementor' ); ?></span>
-					</label>
-					<input type="text" name="website" class="kbf-form__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-					<button type="submit" class="kbf-btn kbf-btn--orange"><?php esc_html_e( 'Отправить', 'kbfacade-elementor' ); ?></button>
-					<p class="kbf-form__message" data-kbf-form-message role="status" aria-live="polite"></p>
-				</form>
-			</div>
-		</div>
 		<?php
 	}
 }

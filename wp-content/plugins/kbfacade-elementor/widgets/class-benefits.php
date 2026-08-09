@@ -51,19 +51,19 @@ class Benefits extends Widget_Base_Common {
 			return array(
 				array(
 					'title' => 'Быстрый и технологичный монтаж',
-					'text'  => 'Системные решения сокращают число операций и ускоряют сдачу фасада.',
+					'text'  => 'Система собирается из готовых элементов, что ускоряет строительство и позволяет сократить сроки сдачи объекта',
 				),
 				array(
 					'title' => 'Монтаж в любое время года',
-					'text'  => 'Работы ведутся без «мокрых» процессов и жёсткой зависимости от сезона.',
+					'text'  => 'Отсутствие «мокрых» процессов позволяет выполнять работы даже при отрицательных температурах без потери качества',
 				),
 				array(
 					'title' => 'Простой доступ к инженерным коммуникациям',
-					'text'  => 'Вентзазор и съёмные элементы упрощают обслуживание сетей.',
+					'text'  => 'При необходимости отдельные панели можно демонтировать и установить обратно без разрушения всей конструкции',
 				),
 				array(
 					'title' => 'Улучшение теплотехнических характеристик здания',
-					'text'  => 'Непрерывный контур утеплителя повышает энергоэффективность объекта.',
+					'text'  => 'Система снижает теплопотери, уменьшает образование мостиков холода и помогает соответствовать современным требованиям по энергоэффективности',
 				),
 			);
 		}
@@ -71,19 +71,19 @@ class Benefits extends Widget_Base_Common {
 		return array(
 			array(
 				'title' => 'Снижение эксплуатационных расходов',
-				'text'  => 'Энергоэффективная оболочка уменьшает затраты на отопление и обслуживание.',
+				'text'  => 'Дополнительная теплоизоляция уменьшает затраты на отопление зимой и кондиционирование летом, снижая общие расходы на содержание здания',
 			),
 			array(
 				'title' => 'Увеличение срока службы здания',
-				'text'  => 'Фасад защищает несущие конструкции от влаги и перепадов температур.',
+				'text'  => 'Воздушный зазор защищает несущие конструкции от влаги, перепадов температур и образования плесени, сокращая расходы на капитальный ремонт',
 			),
 			array(
 				'title' => 'Повышение инвестиционной привлекательности',
-				'text'  => 'Современный облик и предсказуемые сроки повышают ценность объекта.',
+				'text'  => 'Энергоэффективные и долговечные здания имеют более высокий спрос со стороны институциональных инвесторов, банков и крупных арендаторов',
 			),
 			array(
 				'title' => 'Минимальные затраты на обслуживание фасада',
-				'text'  => 'Долговечные материалы и доступ к узлам снижают стоимость владения.',
+				'text'  => 'Современные облицовочные материалы устойчивы к выцветанию, загрязнениям и механическим воздействиям, благодаря чему фасад сохраняет презентабельный вид долгие годы',
 			),
 		);
 	}
@@ -117,7 +117,7 @@ class Benefits extends Widget_Base_Common {
 			array(
 				'label'   => esc_html__( 'Title', 'kbfacade-elementor' ),
 				'type'    => Controls_Manager::TEXT,
-				'default' => 'КБФасад — для девелоперов:',
+				'default' => 'КБФасад - для девелоперов:',
 			)
 		);
 		$this->add_control(
@@ -125,18 +125,11 @@ class Benefits extends Widget_Base_Common {
 			array(
 				'label'   => esc_html__( 'Lead', 'kbfacade-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
-				'default' => 'Сокращение сроков строительства и бюджета проекта + снижение рисков + увеличение полезной площади здания',
+				'default' => '',
 			)
 		);
 
 		$items = new Repeater();
-		$items->add_control(
-			'icon',
-			array(
-				'label' => esc_html__( 'Icon', 'kbfacade-elementor' ),
-				'type'  => Controls_Manager::MEDIA,
-			)
-		);
 		$items->add_control(
 			'title',
 			array(
@@ -170,12 +163,10 @@ class Benefits extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s       = $this->get_settings_for_display();
-		$items   = ! empty( $s['items'] ) ? $s['items'] : $this->defaults_for_preset( $s['preset'] );
-		$icon    = kbfacade_theme_asset_url( 'images/icons/badges.svg' );
+		$s     = $this->get_settings_for_display();
+		$items = ! empty( $s['items'] ) ? $s['items'] : $this->defaults_for_preset( $s['preset'] );
 
-		// If installer passed builders preset without custom items, swap defaults.
-		if ( 'builders' === $s['preset'] && 4 === count( $items ) && 'Снижение эксплуатационных расходов' === $items[0]['title'] ) {
+		if ( 'builders' === $s['preset'] && ! empty( $items[0]['title'] ) && 'Снижение эксплуатационных расходов' === $items[0]['title'] ) {
 			$items = $this->defaults_for_preset( 'builders' );
 		}
 		?>
@@ -189,8 +180,7 @@ class Benefits extends Widget_Base_Common {
 				</div>
 				<div class="kbf-benefits__grid">
 					<?php foreach ( (array) $items as $item ) : ?>
-						<article class="kbf-benefits__item">
-							<?php kbfacade_render_image( $item['icon'], $icon, '', 'kbf-benefits__icon' ); ?>
+						<article class="kbf-card kbf-benefits__item">
 							<h3><?php echo esc_html( $item['title'] ); ?></h3>
 							<p><?php echo esc_html( $item['text'] ); ?></p>
 						</article>

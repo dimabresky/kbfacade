@@ -85,7 +85,13 @@ class Cta extends Widget_Base_Common {
 	 */
 	protected function render() {
 		$s   = $this->get_settings_for_display();
-		$url = ! empty( $s['image']['url'] ) ? $s['image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
+		$url = ! empty( $s['image']['url'] ) ? $s['image']['url'] : '';
+		if ( ! $url ) {
+			$png = KBFACADE_ELEMENTOR_PATH . 'assets/images/cta/worker.png';
+			$url = file_exists( $png )
+				? kbfacade_asset_url( 'assets/images/cta/worker.png' )
+				: kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
+		}
 		?>
 		<section class="kbf-cta">
 			<div class="kbf-container kbf-cta__inner">

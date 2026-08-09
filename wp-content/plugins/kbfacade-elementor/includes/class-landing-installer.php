@@ -67,6 +67,7 @@ class Landing_Installer {
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Install КБФасад Landing', 'kbfacade-elementor' ); ?></h1>
 			<p><?php esc_html_e( 'Creates or refreshes a WordPress page with all Elementor sections from the technical specification. Content remains fully editable in Elementor.', 'kbfacade-elementor' ); ?></p>
+			<p><?php esc_html_e( 'Phones, email, address, map embed, social links and form recipient are managed globally under Settings → КБФасад.', 'kbfacade-elementor' ); ?></p>
 			<?php if ( $page_id && get_post( $page_id ) ) : ?>
 				<p>
 					<a href="<?php echo esc_url( get_permalink( $page_id ) ); ?>" target="_blank" rel="noopener noreferrer">
