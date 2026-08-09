@@ -418,7 +418,7 @@
 	font-weight: 900;
 }
 
-.kbf-hero__title-line:first-child {
+.kbf-hero__title .kbf-hero__title-line:first-child {
 	font-size: 1.32em;
 }
 
@@ -437,12 +437,11 @@
 	align-items: center;
 }
 
-.kbf-hero__title-line--sub {
+.kbf-hero__title-row .kbf-hero__title-line--sub {
 	color: #343d45;
-	font-size: clamp(0.95rem, 1.9vw, 1.45rem);
+	font-size: clamp(1.35rem, 3vw, 2.15rem);
 	font-weight: 500;
 	line-height: 1.15;
-	margin-top: 0.65em;
 }
 
 .kbf-hero__title-line-rule {
