@@ -746,6 +746,7 @@
 .kbf-slider-section--fastenings .kbf-carousel__item:hover .kbf-carousel__media,
 .kbf-slider-section--fastenings .kbf-carousel__item:focus-within .kbf-carousel__media {
 	border-color: transparent;
+	box-shadow: none;
 }
 
 .kbf-slider-section--fastenings .kbf-carousel__caption {
