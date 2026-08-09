@@ -9,6 +9,7 @@ wp-content/uploads/
 wp-content/cache/
 wp-content/upgrade/
 wp-content/backup*/
+wp-content/languages/
 wp-content/advanced-cache.php
 wp-content/object-cache.php
 wp-content/db.php
@@ -50,3 +51,7 @@ Thumbs.db
 # Font build intermediates (keep source TTF and generated WOFF2 in theme)
 *.tmp
 *.bak
+
+# Heavy editable design sources (PNG/SVG/TTF and preview remain tracked)
+developer-stuff/**/*.psd
+developer-stuff/**/*.PSD
