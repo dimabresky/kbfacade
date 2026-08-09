@@ -192,16 +192,11 @@ class Settings {
 	 * @return string
 	 */
 	public static function get_recipient() {
+		self::migrate_legacy_option();
 		$data = self::get_all();
 		if ( is_email( $data['form_recipient'] ) ) {
 			return $data['form_recipient'];
 		}
-
-		$legacy = get_option( self::LEGACY_RECIPIENT_KEY, '' );
-		if ( is_email( (string) $legacy ) ) {
-			return (string) $legacy;
-		}
-
 		if ( is_email( $data['email'] ) ) {
 			return $data['email'];
 		}
@@ -307,6 +302,16 @@ class Settings {
 	 * @return void
 	 */
 	public function maybe_migrate_legacy_option() {
+		self::migrate_legacy_option();
+	}
+
+	/**
+	 * One-time copy of `kbfacade_form_recipient` into `kbfacade_site_settings`.
+	 * Safe to call from frontend getters before sending mail.
+	 *
+	 * @return void
+	 */
+	public static function migrate_legacy_option() {
 		$current = get_option( self::OPTION_KEY, null );
 		if ( null !== $current && false !== $current ) {
 			return;
@@ -318,6 +323,10 @@ class Settings {
 			$data['form_recipient'] = (string) $legacy;
 		}
 		add_option( self::OPTION_KEY, $data );
+
+		if ( is_email( (string) $legacy ) ) {
+			delete_option( self::LEGACY_RECIPIENT_KEY );
+		}
 	}
 
 	/**
