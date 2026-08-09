@@ -1140,24 +1140,9 @@
 
 	.kbf-header__nav,
 	.kbf-header__cta,
-	.kbf-header__email {
-		display: none;
-	}
-
+	.kbf-header__email,
 	.kbf-header__contacts {
-		grid-column: 1 / -1;
-		justify-content: flex-start;
-		width: 100%;
-	}
-
-	.kbf-header__phones {
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 0.2rem;
-	}
-
-	.kbf-header__phone {
-		font-size: 0.88rem;
+		display: none;
 	}
 
 	.kbf-header__burger {
@@ -1186,13 +1171,37 @@
 		grid-auto-columns: 85%;
 	}
 
-	.kbf-slider-section--fastenings .kbf-carousel__track,
-	.kbf-slider-section--objects .kbf-carousel__track {
-		grid-auto-columns: 85%;
+	.kbf-slider-section--fastenings .kbf-carousel,
+	.kbf-slider-section--objects .kbf-carousel {
+		grid-template-columns: auto 1fr auto;
+		gap: 0.35rem;
 	}
 
+	.kbf-slider-section--fastenings .kbf-carousel__track,
+	.kbf-slider-section--objects .kbf-carousel__track {
+		grid-auto-columns: 100%;
+		gap: 0;
+	}
+
+	.kbf-slider-section--fastenings .kbf-slider__btn,
+	.kbf-slider-section--objects .kbf-slider__btn {
+		width: 40px;
+		height: 40px;
+		font-size: 2rem;
+	}
+
+	.kbf-footer__media,
 	.kbf-footer__contacts {
-		justify-items: stretch;
+		display: none;
+	}
+
+	.kbf-footer__inner {
+		grid-template-columns: 1fr;
+		padding: 1.5rem 0;
+	}
+
+	.kbf-footer__center {
+		padding: 0;
 	}
 }
 
