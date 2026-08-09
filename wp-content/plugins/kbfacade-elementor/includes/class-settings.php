@@ -44,7 +44,8 @@ class Settings {
 	public function init() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'admin_init', array( $this, 'maybe_migrate_legacy_option' ) );
+		// Migrate on frontend too so form mail keeps the legacy recipient before any admin visit.
+		add_action( 'init', array( $this, 'maybe_migrate_legacy_option' ), 1 );
 	}
 
 	/**
@@ -195,6 +196,12 @@ class Settings {
 		if ( is_email( $data['form_recipient'] ) ) {
 			return $data['form_recipient'];
 		}
+
+		$legacy = get_option( self::LEGACY_RECIPIENT_KEY, '' );
+		if ( is_email( (string) $legacy ) ) {
+			return (string) $legacy;
+		}
+
 		if ( is_email( $data['email'] ) ) {
 			return $data['email'];
 		}

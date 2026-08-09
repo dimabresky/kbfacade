@@ -191,13 +191,38 @@ class Hero extends Widget_Base_Common {
 			kbfacade_theme_asset_url( 'images/icons/badges.svg' ),
 			kbfacade_theme_asset_url( 'images/icons/engineer.svg' ),
 		);
+
+		// Backward compatibility: pages saved with a single `title` control.
+		$legacy_title = isset( $s['title'] ) ? trim( (string) $s['title'] ) : '';
+		$line_1       = isset( $s['title_line_1'] ) ? (string) $s['title_line_1'] : '';
+		$line_2       = isset( $s['title_line_2'] ) ? (string) $s['title_line_2'] : '';
+		$line_3       = isset( $s['title_line_3'] ) ? (string) $s['title_line_3'] : '';
+		$composed     = trim( preg_replace( '/\s+/u', ' ', $line_1 . ' ' . $line_2 . ' ' . $line_3 ) );
+		$legacy_flat  = trim( preg_replace( '/\s+/u', ' ', $legacy_title ) );
+		if ( $legacy_title && $legacy_flat && $legacy_flat !== $composed ) {
+			$parts = preg_split( '/\r\n|\r|\n/', $legacy_title );
+			$parts = array_values( array_filter( array_map( 'trim', (array) $parts ), 'strlen' ) );
+			if ( count( $parts ) >= 3 ) {
+				$line_1 = $parts[0];
+				$line_2 = $parts[1];
+				$line_3 = implode( ' ', array_slice( $parts, 2 ) );
+			} elseif ( 2 === count( $parts ) ) {
+				$line_1 = $parts[0];
+				$line_2 = $parts[1];
+				$line_3 = '';
+			} else {
+				$line_1 = $legacy_title;
+				$line_2 = '';
+				$line_3 = '';
+			}
+		}
 		?>
 		<section class="kbf-hero" data-kbf-slider data-autoplay="<?php echo esc_attr( $s['autoplay'] ); ?>" data-speed="<?php echo esc_attr( (string) $s['speed'] ); ?>">
 			<div class="kbf-container kbf-hero__top">
 				<h1 class="kbf-hero__title">
-					<span class="kbf-hero__title-line"><?php echo esc_html( $s['title_line_1'] ); ?></span>
-					<span class="kbf-hero__title-line"><?php echo esc_html( $s['title_line_2'] ); ?></span>
-					<span class="kbf-hero__title-line kbf-hero__title-line--accent"><?php echo esc_html( $s['title_line_3'] ); ?></span>
+					<?php if ( $line_1 ) : ?><span class="kbf-hero__title-line"><?php echo esc_html( $line_1 ); ?></span><?php endif; ?>
+					<?php if ( $line_2 ) : ?><span class="kbf-hero__title-line"><?php echo esc_html( $line_2 ); ?></span><?php endif; ?>
+					<?php if ( $line_3 ) : ?><span class="kbf-hero__title-line kbf-hero__title-line--accent"><?php echo esc_html( $line_3 ); ?></span><?php endif; ?>
 				</h1>
 				<div class="kbf-hero__facts">
 					<?php foreach ( array_values( (array) $s['facts'] ) as $index => $fact ) : ?>
