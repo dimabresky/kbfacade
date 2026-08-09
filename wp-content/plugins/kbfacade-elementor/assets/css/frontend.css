@@ -910,7 +910,7 @@
 
 .kbf-contacts__row {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: minmax(0, max-content) minmax(0, 28rem);
 	gap: 2rem 4rem;
 	align-items: start;
 	justify-content: center;
