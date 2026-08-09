@@ -892,6 +892,17 @@
 	min-height: 360px;
 }
 
+.kbf-inline-form__media,
+.kbf-inline-form__content {
+	border: 0;
+	box-shadow: none;
+}
+
+.elementor-widget-kbf-form > .elementor-widget-container {
+	border: 0;
+	box-shadow: none;
+}
+
 /* Contacts horizontal */
 .kbf-contacts {
 	padding: 3rem 0 4rem;
