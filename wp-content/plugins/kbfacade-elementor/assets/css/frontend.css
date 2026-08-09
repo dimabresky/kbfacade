@@ -971,8 +971,6 @@
 	text-align: center;
 	padding: 0.75rem 1rem;
 	font-weight: 700;
-	position: relative;
-	z-index: 1;
 }
 
 .kbf-footer__inner {
@@ -1012,9 +1010,10 @@
 }
 
 .kbf-footer__media {
+	position: relative;
+	z-index: 2;
 	align-self: end;
 	margin-top: -3.5rem;
-	z-index: 2;
 }
 
 .kbf-footer__media img,
