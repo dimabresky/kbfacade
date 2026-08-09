@@ -3,7 +3,7 @@
  * Plugin Name: КБФасад Elementor
  * Description: Elementor widgets, forms, popup and landing installer for the КБФасад site.
  * Plugin URI:  https://github.com/dimabresky/kbfacade
- * Version:     1.1.0
+ * Version:     1.1.1
  * Author:      КБФасад
  * Text Domain: kbfacade-elementor
  * Requires at least: 6.8
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KBFACADE_ELEMENTOR_VERSION', '1.1.0' );
+define( 'KBFACADE_ELEMENTOR_VERSION', '1.1.1' );
 define( 'KBFACADE_ELEMENTOR_FILE', __FILE__ );
 define( 'KBFACADE_ELEMENTOR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'KBFACADE_ELEMENTOR_URL', plugin_dir_url( __FILE__ ) );
