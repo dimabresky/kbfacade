@@ -322,9 +322,10 @@ class Settings {
 		if ( is_email( (string) $legacy ) ) {
 			$data['form_recipient'] = (string) $legacy;
 		}
-		add_option( self::OPTION_KEY, $data );
 
-		if ( is_email( (string) $legacy ) ) {
+		$created = add_option( self::OPTION_KEY, $data );
+		// Only drop the legacy key after the new settings option is actually created.
+		if ( $created && is_email( (string) $legacy ) ) {
 			delete_option( self::LEGACY_RECIPIENT_KEY );
 		}
 	}
