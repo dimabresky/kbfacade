@@ -746,7 +746,7 @@
 	font-weight: 400;
 }
 
-.kbf-slider-section--fastenings .kbf-slider__btn[hidden] {
+.kbf-carousel .kbf-slider__btn[hidden] {
 	display: block;
 	visibility: hidden;
 	pointer-events: none;
