@@ -905,14 +905,17 @@
 
 /* Contacts horizontal */
 .kbf-contacts {
-	padding: 3rem 0 4rem;
+	padding: 0 0 4rem;
 }
 
 .kbf-contacts__row {
 	display: grid;
-	grid-template-columns: 0.7fr 1.3fr;
-	gap: 2rem;
+	grid-template-columns: minmax(0, max-content) minmax(0, 28rem);
+	gap: 2rem 4rem;
 	align-items: start;
+	justify-content: center;
+	border-top: 1px solid #343d45;
+	padding-top: 3.25rem;
 }
 
 .kbf-contacts__title {
@@ -960,6 +963,7 @@
 .kbf-footer {
 	background: #343d45;
 	color: #fff;
+	overflow: hidden;
 }
 
 .kbf-footer__bar {
@@ -973,8 +977,8 @@
 	display: grid;
 	grid-template-columns: 0.8fr 1.2fr 0.9fr;
 	gap: 1.5rem;
-	align-items: center;
-	padding: 2rem 0;
+	align-items: end;
+	padding: 0;
 }
 
 .kbf-footer a {
@@ -998,12 +1002,28 @@
 	display: grid;
 	gap: 0.5rem;
 	justify-items: start;
+	padding: 2rem 0;
 }
 
-.kbf-footer__media img {
-	max-height: 240px;
+.kbf-footer__center {
+	padding: 2rem 0;
+}
+
+.kbf-footer__media {
+	position: relative;
+	z-index: 2;
+	align-self: end;
+	margin-top: -1rem;
+}
+
+.kbf-footer__media img,
+.kbf-footer__media picture {
+	display: block;
+	max-height: min(360px, 48vw);
+	width: auto;
 	margin-inline: auto;
-	object-fit: contain;
+	object-fit: cover;
+	object-position: center top;
 }
 
 /* Responsive */

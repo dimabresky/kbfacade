@@ -123,7 +123,7 @@ class Footer extends Widget_Base_Common {
 	protected function render() {
 		$s      = $this->get_settings_for_display();
 		$logo_fallback = kbfacade_theme_asset_relative( 'images/logo/kbfacade-white.png' );
-		$side_fallback = kbfacade_worker_fallback_relative();
+		$side_fallback = kbfacade_asset_relative( 'assets/images/cta/engineer.png' );
 		$phones = Settings::get_phones();
 		$email  = Settings::get_email();
 		$social = Settings::get_social();
