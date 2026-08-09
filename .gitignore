@@ -1,0 +1,52 @@
+# WordPress configuration and secrets
+wp-config.php
+wp-config-local.php
+.env
+.env.*
+
+# WordPress runtime / generated
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup*/
+wp-content/advanced-cache.php
+wp-content/object-cache.php
+wp-content/db.php
+wp-content/debug.log
+*.log
+
+# Third-party plugins (install via WP admin / Composer)
+wp-content/plugins/elementor/
+wp-content/plugins/akismet/
+wp-content/plugins/hello.php
+wp-content/plugins/index.php
+
+# Default WordPress themes
+wp-content/themes/twentytwentythree/
+wp-content/themes/twentytwentyfour/
+wp-content/themes/twentytwentyfive/
+wp-content/themes/index.php
+
+# WordPress core stubs present in this workspace
+wp-admin/
+wp-includes/
+index.php
+wp-settings.php
+wp-blog-header.php
+wp-load.php
+wp-login.php
+xmlrpc.php
+license.txt
+readme.html
+
+# IDE / OS
+nbproject/
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Font build intermediates (keep source TTF and generated WOFF2 in theme)
+*.tmp
+*.bak
