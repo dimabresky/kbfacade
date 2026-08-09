@@ -53,11 +53,27 @@ class Hero extends Widget_Base_Common {
 		);
 
 		$this->add_control(
-			'title',
+			'title_line_1',
 			array(
-				'label'   => esc_html__( 'Title', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXTAREA,
-				'default' => 'Искусство преображения вашего объекта',
+				'label'   => esc_html__( 'Title line 1', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => 'Искусство',
+			)
+		);
+		$this->add_control(
+			'title_line_2',
+			array(
+				'label'   => esc_html__( 'Title line 2', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => 'преображения',
+			)
+		);
+		$this->add_control(
+			'title_line_3',
+			array(
+				'label'   => esc_html__( 'Title line 3', 'kbfacade-elementor' ),
+				'type'    => Controls_Manager::TEXT,
+				'default' => 'Вашего объекта',
 			)
 		);
 
@@ -169,8 +185,8 @@ class Hero extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s      = $this->get_settings_for_display();
-		$fallback = kbfacade_asset_url( 'assets/images/hero/hero-1.jpg' );
+		$s             = $this->get_settings_for_display();
+		$fallback      = kbfacade_asset_url( 'assets/images/hero/hero-1.jpg' );
 		$icon_fallback = array(
 			kbfacade_theme_asset_url( 'images/icons/badges.svg' ),
 			kbfacade_theme_asset_url( 'images/icons/engineer.svg' ),
@@ -178,7 +194,11 @@ class Hero extends Widget_Base_Common {
 		?>
 		<section class="kbf-hero" data-kbf-slider data-autoplay="<?php echo esc_attr( $s['autoplay'] ); ?>" data-speed="<?php echo esc_attr( (string) $s['speed'] ); ?>">
 			<div class="kbf-container kbf-hero__top">
-				<h1 class="kbf-hero__title"><?php echo esc_html( $s['title'] ); ?></h1>
+				<h1 class="kbf-hero__title">
+					<span class="kbf-hero__title-line"><?php echo esc_html( $s['title_line_1'] ); ?></span>
+					<span class="kbf-hero__title-line"><?php echo esc_html( $s['title_line_2'] ); ?></span>
+					<span class="kbf-hero__title-line kbf-hero__title-line--accent"><?php echo esc_html( $s['title_line_3'] ); ?></span>
+				</h1>
 				<div class="kbf-hero__facts">
 					<?php foreach ( array_values( (array) $s['facts'] ) as $index => $fact ) : ?>
 						<div class="kbf-hero__fact">

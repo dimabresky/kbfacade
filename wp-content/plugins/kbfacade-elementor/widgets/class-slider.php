@@ -47,7 +47,7 @@ class Slider extends Widget_Base_Common {
 	private function defaults_for_preset( $preset ) {
 		if ( 'objects' === $preset ) {
 			$items = array();
-			for ( $i = 1; $i <= 8; $i++ ) {
+			for ( $i = 1; $i <= 5; $i++ ) {
 				$items[] = array(
 					'title'       => 'Объект ' . $i,
 					'description' => 'Комплекс работ по проектированию и монтажу вентилируемого фасада.',

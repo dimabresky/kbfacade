@@ -21,7 +21,7 @@ Elementor widgets, consultation forms and landing installer for КБФасад.
 2. Activate theme "КБФасад"
 3. Activate plugin "КБФасад Elementor"
 4. Open Tools → КБФасад Landing and install the page
-5. Configure recipient email under Settings → КБФасад Forms
+5. Configure phones, email, address, map, social links and form recipient under Settings → КБФасад
 
 == Changelog ==
 

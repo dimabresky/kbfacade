@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Compact lead form with side image.
+ * Compact lead form with side image and underline fields.
  */
 class Form extends Widget_Base_Common {
 
@@ -74,7 +74,7 @@ class Form extends Widget_Base_Common {
 				'label'        => esc_html__( 'Show name field', 'kbfacade-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
-				'default'      => '',
+				'default'      => 'yes',
 			)
 		);
 
@@ -95,7 +95,7 @@ class Form extends Widget_Base_Common {
 				</div>
 				<div class="kbf-inline-form__content">
 					<h2><?php echo esc_html( $s['title'] ); ?></h2>
-					<form class="kbf-form" data-kbf-form data-form-type="inline" novalidate>
+					<form class="kbf-form kbf-form--underline" data-kbf-form data-form-type="inline" novalidate>
 						<?php if ( 'yes' === $s['show_name'] ) : ?>
 							<label>
 								<span><?php esc_html_e( 'Имя', 'kbfacade-elementor' ); ?></span>
