@@ -831,6 +831,10 @@
 	color: #ff6a13;
 }
 
+.kbf-cta__line:not(.kbf-cta__line--accent) {
+	font-weight: 500;
+}
+
 .kbf-cta__copy .kbf-btn {
 	margin-top: 1.35rem;
 	border-radius: 0;
