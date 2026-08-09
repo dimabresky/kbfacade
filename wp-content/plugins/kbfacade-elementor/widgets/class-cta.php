@@ -84,13 +84,13 @@ class Cta extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s               = $this->get_settings_for_display();
-		$image_fallback  = kbfacade_worker_fallback_relative();
+		$s              = $this->get_settings_for_display();
+		$image_fallback = kbfacade_asset_relative( 'assets/images/cta/engineer.png' );
 		?>
 		<section class="kbf-cta">
 			<div class="kbf-container kbf-cta__inner">
 				<div class="kbf-cta__copy">
-					<p class="kbf-cta__line"><?php echo esc_html( $s['line_1'] ); ?></p>
+					<p class="kbf-cta__line kbf-cta__line--accent"><?php echo esc_html( $s['line_1'] ); ?></p>
 					<p class="kbf-cta__line"><?php echo esc_html( $s['line_2'] ); ?></p>
 					<button type="button" class="kbf-btn kbf-btn--orange" data-kbf-open-modal>
 						<?php echo esc_html( $s['button_label'] ); ?>
