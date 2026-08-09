@@ -21,7 +21,7 @@
 }
 
 .kbf-section-head h2,
-.kbf-about h2,
+.kbf-about__title,
 .kbf-cta__line,
 .kbf-contacts__title,
 .kbf-inline-form h2 {
@@ -522,13 +522,36 @@
 /* About */
 .kbf-about {
 	padding: 4.5rem 0;
+	border-top: 1px solid #343d45;
 }
 
 .kbf-about__grid {
 	display: grid;
 	grid-template-columns: 1.45fr 0.75fr;
-	gap: 2.5rem;
-	align-items: center;
+	grid-template-rows: auto auto;
+	column-gap: 2.5rem;
+	row-gap: 1.5rem;
+}
+
+.kbf-about__title {
+	grid-column: 1;
+	grid-row: 1;
+	margin: 0;
+	font-weight: 900;
+	color: #343d45;
+	font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+	line-height: 1.02;
+}
+
+.kbf-about__logo {
+	grid-column: 2;
+	grid-row: 1;
+	align-self: center;
+}
+
+.kbf-about__text {
+	grid-column: 1;
+	grid-row: 2;
 }
 
 .kbf-about__logo img {
@@ -879,6 +902,21 @@
 	.kbf-contacts__row,
 	.kbf-footer__inner {
 		grid-template-columns: 1fr;
+	}
+
+	.kbf-about__title {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
+	.kbf-about__logo {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	.kbf-about__text {
+		grid-column: 1;
+		grid-row: 3;
 	}
 
 	.kbf-hero__facts {
