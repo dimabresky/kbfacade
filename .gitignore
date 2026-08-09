@@ -27,6 +27,7 @@ wp-content/themes/twentytwentythree/
 wp-content/themes/twentytwentyfour/
 wp-content/themes/twentytwentyfive/
 wp-content/themes/index.php
+wp-content/index.php
 
 # WordPress core stubs present in this workspace (root only)
 /wp-admin/
