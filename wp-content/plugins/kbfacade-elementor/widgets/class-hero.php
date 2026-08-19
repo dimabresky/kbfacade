@@ -235,6 +235,7 @@ class Hero extends Widget_Base_Common {
 			return $slides;
 		}
 
+		$slides = array();
 		$image = ! empty( $settings['banner_image'] ) ? (array) $settings['banner_image'] : array();
 		$link  = ! empty( $settings['banner_link'] ) ? (array) $settings['banner_link'] : array();
 
@@ -415,7 +416,7 @@ class Hero extends Widget_Base_Common {
 				<div class="kbf-hero__media kbf-hero__media--slider" data-kbf-carousel data-kbf-carousel-step="full">
 					<div class="kbf-hero__carousel">
 						<button type="button" class="kbf-slider__btn kbf-hero__nav kbf-hero__nav--prev" data-kbf-carousel-prev hidden aria-label="<?php esc_attr_e( 'Назад', 'kbfacade-elementor' ); ?>">‹</button>
-						<div class="kbf-hero__track kbf-carousel__track" data-kbf-carousel-track tabindex="0">
+						<div class="kbf-hero__track" data-kbf-carousel-track tabindex="0">
 							<?php foreach ( array_values( $banner_slides ) as $index => $slide ) : ?>
 								<?php $this->render_banner_slide( (array) $slide, $fallback, 0 === $index ? 'eager' : 'lazy', true ); ?>
 							<?php endforeach; ?>

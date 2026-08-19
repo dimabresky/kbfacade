@@ -537,6 +537,12 @@
 	min-height: clamp(240px, 42vw, 460px);
 }
 
+.kbf-hero__media--slider .kbf-hero__track {
+	grid-auto-columns: 100%;
+	gap: 0;
+	padding-bottom: 0;
+}
+
 .kbf-hero__track::-webkit-scrollbar {
 	display: none;
 }
