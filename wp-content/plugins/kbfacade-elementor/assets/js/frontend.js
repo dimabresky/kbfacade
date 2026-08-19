@@ -86,9 +86,13 @@
 		var timer = null;
 		var prev = qs(root, '[data-kbf-carousel-prev]');
 		var next = qs(root, '[data-kbf-carousel-next]');
+		var step = root.getAttribute('data-kbf-carousel-step');
 
 		function scrollByDir(dir) {
-			var amount = Math.max(240, Math.floor(track.clientWidth * 0.8));
+			var amount =
+				step === 'full'
+					? track.clientWidth
+					: Math.max(240, Math.floor(track.clientWidth * 0.8));
 			track.scrollBy({ left: dir * amount, behavior: reducedMotion ? 'auto' : 'smooth' });
 		}
 
@@ -137,6 +141,10 @@
 			'touchend',
 			function (event) {
 				var dx = event.changedTouches[0].clientX - startX;
+				if (step === 'full') {
+					updateNav();
+					return;
+				}
 				if (Math.abs(dx) > 40) {
 					scrollByDir(dx < 0 ? 1 : -1);
 				}
