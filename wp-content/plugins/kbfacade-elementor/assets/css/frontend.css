@@ -519,6 +519,58 @@
 	display: block;
 }
 
+.kbf-hero__carousel {
+	position: relative;
+	width: 100%;
+	min-height: clamp(240px, 42vw, 460px);
+}
+
+.kbf-hero__track {
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 100%;
+	gap: 0;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	min-height: clamp(240px, 42vw, 460px);
+}
+
+.kbf-hero__track::-webkit-scrollbar {
+	display: none;
+}
+
+.kbf-hero__track .kbf-hero__banner {
+	scroll-snap-align: start;
+	min-height: clamp(240px, 42vw, 460px);
+}
+
+.kbf-hero__nav {
+	position: absolute;
+	top: 50%;
+	z-index: 2;
+	transform: translateY(-50%);
+	width: 52px;
+	height: 52px;
+	border-radius: 2px;
+	background: rgba(255, 255, 255, 0.82);
+	color: #343d45;
+	font-size: 2.25rem;
+}
+
+.kbf-hero__nav--prev {
+	left: 0.75rem;
+}
+
+.kbf-hero__nav--next {
+	right: 0.75rem;
+}
+
+.kbf-hero__nav[hidden] {
+	display: none;
+}
+
 /* About */
 .kbf-about {
 	padding: 4.5rem 0;
@@ -1188,6 +1240,20 @@
 		width: 40px;
 		height: 40px;
 		font-size: 2rem;
+	}
+
+	.kbf-hero__nav {
+		width: 40px;
+		height: 40px;
+		font-size: 2rem;
+	}
+
+	.kbf-hero__nav--prev {
+		left: 0.35rem;
+	}
+
+	.kbf-hero__nav--next {
+		right: 0.35rem;
 	}
 
 	.kbf-footer__media,

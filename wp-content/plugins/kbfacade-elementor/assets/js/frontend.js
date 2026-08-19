@@ -88,7 +88,11 @@
 		var next = qs(root, '[data-kbf-carousel-next]');
 
 		function scrollByDir(dir) {
-			var amount = Math.max(240, Math.floor(track.clientWidth * 0.8));
+			var step = root.getAttribute('data-kbf-carousel-step');
+			var amount =
+				step === 'full'
+					? track.clientWidth
+					: Math.max(240, Math.floor(track.clientWidth * 0.8));
 			track.scrollBy({ left: dir * amount, behavior: reducedMotion ? 'auto' : 'smooth' });
 		}
 
