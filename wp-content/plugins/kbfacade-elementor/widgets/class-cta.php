@@ -84,20 +84,20 @@ class Cta extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s   = $this->get_settings_for_display();
-		$url = ! empty( $s['image']['url'] ) ? $s['image']['url'] : kbfacade_asset_url( 'assets/images/cta/worker.jpg' );
+		$s              = $this->get_settings_for_display();
+		$image_fallback = kbfacade_asset_relative( 'assets/images/cta/engineer.png' );
 		?>
 		<section class="kbf-cta">
 			<div class="kbf-container kbf-cta__inner">
 				<div class="kbf-cta__copy">
-					<p class="kbf-cta__line"><?php echo esc_html( $s['line_1'] ); ?></p>
+					<p class="kbf-cta__line kbf-cta__line--accent"><?php echo esc_html( $s['line_1'] ); ?></p>
 					<p class="kbf-cta__line"><?php echo esc_html( $s['line_2'] ); ?></p>
 					<button type="button" class="kbf-btn kbf-btn--orange" data-kbf-open-modal>
 						<?php echo esc_html( $s['button_label'] ); ?>
 					</button>
 				</div>
 				<div class="kbf-cta__media">
-					<img src="<?php echo esc_url( $url ); ?>" alt="" loading="lazy" />
+					<?php kbfacade_render_image( $s['image'], $image_fallback ); ?>
 				</div>
 			</div>
 		</section>

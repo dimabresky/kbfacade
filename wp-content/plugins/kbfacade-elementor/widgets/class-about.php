@@ -56,7 +56,7 @@ class About extends Widget_Base_Common {
 			array(
 				'label'   => esc_html__( 'Title', 'kbfacade-elementor' ),
 				'type'    => Controls_Manager::TEXTAREA,
-				'default' => 'Придумываем. Проектируем. Монтируем.',
+				'default' => "Придумываем.\nПроектируем.\nМонтируем.",
 			)
 		);
 		$this->add_control(
@@ -64,7 +64,7 @@ class About extends Widget_Base_Common {
 			array(
 				'label'   => esc_html__( 'Text', 'kbfacade-elementor' ),
 				'type'    => Controls_Manager::WYSIWYG,
-				'default' => '<p>КБФасад — команда инженеров и монтажников, которая превращает идею вентилируемого фасада в надёжную, энергоэффективную и выразительную оболочку здания. Мы подбираем материалы, проектируем подсистему и выполняем монтаж под ключ.</p><p>Вентилируемый фасад защищает несущие конструкции, улучшает теплотехнические характеристики и позволяет реализовать смелые архитектурные решения без компромисса по срокам и бюджету.</p>',
+				'default' => '<p>Наша компания создана на базе предприятия-лидера по импорту строительно-отделочных материалов в Республику Беларусь - компании ООО “ОП НИИ ПКД”. КБФасад существует уже более 10 лет. И за это время реализовал более 350 проектов самой различной сложности. И да, мы с уверенностью можем заявить, что вентилируемые фасады для зданий - это наш конек.</p><p>Вентфасады сегодня – это функциональная необходимость, а также это оптимальный способ улучшить тепло- и звукоизоляционные свойства наружных стен здания. Помимо этого использование вентилируемых фасадов является отличным решением в борьбе с конденсацией.</p>',
 			)
 		);
 		$this->add_media_control( 'logo', esc_html__( 'Side logo', 'kbfacade-elementor' ) );
@@ -77,18 +77,16 @@ class About extends Widget_Base_Common {
 	 */
 	protected function render() {
 		$s        = $this->get_settings_for_display();
-		$logo_url = ! empty( $s['logo']['url'] ) ? $s['logo']['url'] : kbfacade_theme_asset_url( 'images/logo/kbfacade-grey.png' );
+		$logo_fallback = kbfacade_theme_asset_relative( 'images/logo/kbfacade-grey.png' );
 		?>
 		<section class="kbf-about" id="about">
 			<div class="kbf-container kbf-about__grid">
-				<div class="kbf-about__content">
-					<h2><?php echo esc_html( $s['title'] ); ?></h2>
-					<div class="kbf-about__text">
-						<?php echo wp_kses_post( $s['text'] ); ?>
-					</div>
-				</div>
+				<h2 class="kbf-about__title"><?php echo nl2br( esc_html( $s['title'] ) ); ?></h2>
 				<div class="kbf-about__logo">
-					<img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php esc_attr_e( 'КБФасад', 'kbfacade-elementor' ); ?>" />
+					<?php kbfacade_render_image( $s['logo'], $logo_fallback, __( 'КБФасад', 'kbfacade-elementor' ) ); ?>
+				</div>
+				<div class="kbf-about__text">
+					<?php echo wp_kses_post( $s['text'] ); ?>
 				</div>
 			</div>
 		</section>

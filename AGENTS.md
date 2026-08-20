@@ -38,6 +38,7 @@ Design sources live in [`developer-stuff/`](developer-stuff/) (TZ XLSX, preview,
 - Use Elementor responsive controls for desktop / tablet / mobile.
 - Landing page structure: importable template under `kbfacade-elementor/templates/` plus widgets with sensible defaults from the TZ.
 - Forms: WordPress REST + `wp_mail()`, recipient configurable in WP admin. Success copy must match TZ exactly.
+- Site contacts (phones, email, address, map embed, social links, form recipient) live in **Settings → КБФасад** (`kbfacade_site_settings`) and are read by Header / Contacts / Footer widgets — do not duplicate them as Elementor overrides.
 
 ## Design system
 

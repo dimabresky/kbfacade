@@ -26,8 +26,8 @@ WordPress core, Elementor, uploads and `wp-config.php` are **not** tracked.
 3. Activate theme **КБФасад**.
 4. Activate plugin **КБФасад Elementor**.
 5. Open **Tools → КБФасад Landing** → *Install / refresh landing page*.
-6. Set recipient email in **Settings → КБФасад Forms**.
-7. Edit the page with Elementor; temporary images from the mockup can be replaced in widget media controls.
+6. Configure contacts in **Settings → КБФасад** (phones, email, address, optional map, social links, form recipient). These values are used by header, contacts, footer and forms — not edited in Elementor.
+7. Edit the page with Elementor; section images/copy remain editable in widget controls.
 
 ## Git workflow
 

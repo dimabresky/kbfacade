@@ -75,66 +75,6 @@
 		});
 	}
 
-	function initHeroSlider(root) {
-		var slides = qsa(root, '[data-kbf-slide]');
-		if (!slides.length) {
-			return;
-		}
-
-		var index = 0;
-		var timer = null;
-		var autoplay = root.getAttribute('data-autoplay') === 'yes' && !reducedMotion;
-		var speed = parseInt(root.getAttribute('data-speed') || '6000', 10);
-
-		function show(next) {
-			slides[index].classList.remove('is-active');
-			index = (next + slides.length) % slides.length;
-			slides[index].classList.add('is-active');
-			var video = qs(slides[index], 'video');
-			if (video) {
-				video.play().catch(function () {});
-			}
-		}
-
-		function stop() {
-			if (timer) {
-				window.clearInterval(timer);
-				timer = null;
-			}
-		}
-
-		function start() {
-			stop();
-			if (!autoplay || speed <= 0) {
-				return;
-			}
-			timer = window.setInterval(function () {
-				show(index + 1);
-			}, speed);
-		}
-
-		var prev = qs(root, '[data-kbf-prev]');
-		var next = qs(root, '[data-kbf-next]');
-		if (prev) {
-			prev.addEventListener('click', function () {
-				show(index - 1);
-				start();
-			});
-		}
-		if (next) {
-			next.addEventListener('click', function () {
-				show(index + 1);
-				start();
-			});
-		}
-
-		root.addEventListener('mouseenter', stop);
-		root.addEventListener('mouseleave', start);
-		root.addEventListener('focusin', stop);
-		root.addEventListener('focusout', start);
-		start();
-	}
-
 	function initCarousel(root) {
 		var track = qs(root, '[data-kbf-carousel-track]');
 		if (!track) {
@@ -144,14 +84,40 @@
 		var autoplay = root.getAttribute('data-autoplay') === 'yes' && !reducedMotion;
 		var speed = parseInt(root.getAttribute('data-speed') || '5000', 10);
 		var timer = null;
+		var prev = qs(root, '[data-kbf-carousel-prev]');
+		var next = qs(root, '[data-kbf-carousel-next]');
+		var step = root.getAttribute('data-kbf-carousel-step');
 
 		function scrollByDir(dir) {
-			var amount = Math.max(240, Math.floor(track.clientWidth * 0.8));
+			var amount =
+				step === 'full'
+					? track.clientWidth
+					: Math.max(240, Math.floor(track.clientWidth * 0.8));
 			track.scrollBy({ left: dir * amount, behavior: reducedMotion ? 'auto' : 'smooth' });
 		}
 
-		var prev = qs(root, '[data-kbf-carousel-prev]');
-		var next = qs(root, '[data-kbf-carousel-next]');
+		function updateNav() {
+			var maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+			var overflow = maxScroll > 1;
+			var atStart = track.scrollLeft <= 1;
+			var atEnd = track.scrollLeft >= maxScroll - 1;
+
+			if (prev) {
+				if (!overflow || atStart) {
+					prev.setAttribute('hidden', '');
+				} else {
+					prev.removeAttribute('hidden');
+				}
+			}
+			if (next) {
+				if (!overflow || atEnd) {
+					next.setAttribute('hidden', '');
+				} else {
+					next.removeAttribute('hidden');
+				}
+			}
+		}
+
 		if (prev) {
 			prev.addEventListener('click', function () {
 				scrollByDir(-1);
@@ -175,12 +141,19 @@
 			'touchend',
 			function (event) {
 				var dx = event.changedTouches[0].clientX - startX;
+				if (step === 'full') {
+					updateNav();
+					return;
+				}
 				if (Math.abs(dx) > 40) {
 					scrollByDir(dx < 0 ? 1 : -1);
 				}
 			},
 			{ passive: true }
 		);
+
+		track.addEventListener('scroll', updateNav, { passive: true });
+		window.addEventListener('resize', updateNav);
 
 		function stop() {
 			if (timer) {
@@ -207,6 +180,8 @@
 		root.addEventListener('mouseleave', start);
 		root.addEventListener('focusin', stop);
 		root.addEventListener('focusout', start);
+		updateNav();
+		window.requestAnimationFrame(updateNav);
 		start();
 	}
 
@@ -340,7 +315,6 @@
 
 	function boot() {
 		qsa(document, '[data-kbf-header]').forEach(initHeader);
-		qsa(document, '[data-kbf-slider]').forEach(initHeroSlider);
 		qsa(document, '[data-kbf-carousel]').forEach(initCarousel);
 		qsa(document, '[data-kbf-catalog]').forEach(initCatalog);
 		qsa(document, '[data-kbf-gallery]').forEach(initGallery);

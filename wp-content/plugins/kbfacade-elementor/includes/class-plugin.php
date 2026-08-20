@@ -46,6 +46,8 @@ class Plugin {
 		Rest_Forms::instance()->init();
 		Assets::instance()->init();
 		Landing_Installer::instance()->init();
+		require_once KBFACADE_ELEMENTOR_PATH . 'includes/class-modal.php';
+		Modal::instance()->init();
 
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 		add_action( 'elementor/elements/categories_registered', array( $this, 'register_category' ) );

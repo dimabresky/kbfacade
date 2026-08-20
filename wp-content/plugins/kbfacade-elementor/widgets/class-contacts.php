@@ -8,14 +8,14 @@
 namespace KBFacadeElementor\Widgets;
 
 use Elementor\Controls_Manager;
-use Elementor\Repeater;
+use KBFacadeElementor\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Address / phones / email contacts block.
+ * Address / phones / email contacts block from global settings.
  */
 class Contacts extends Widget_Base_Common {
 
@@ -69,51 +69,11 @@ class Contacts extends Widget_Base_Common {
 			)
 		);
 		$this->add_control(
-			'address',
+			'contacts_note',
 			array(
-				'label'   => esc_html__( 'Address', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXTAREA,
-				'default' => '223060, Минский р-н, п/о Тростенец, ул. Молодежная, 2А',
-			)
-		);
-
-		$phones = new Repeater();
-		$phones->add_control(
-			'phone',
-			array(
-				'label' => esc_html__( 'Phone', 'kbfacade-elementor' ),
-				'type'  => Controls_Manager::TEXT,
-			)
-		);
-		$this->add_control(
-			'phones',
-			array(
-				'label'       => esc_html__( 'Phones', 'kbfacade-elementor' ),
-				'type'        => Controls_Manager::REPEATER,
-				'fields'      => $phones->get_controls(),
-				'default'     => array(
-					array( 'phone' => '+375 44 777-96-96' ),
-					array( 'phone' => '+375 17 294-96-96' ),
-				),
-				'title_field' => '{{{ phone }}}',
-			)
-		);
-
-		$this->add_control(
-			'email',
-			array(
-				'label'   => esc_html__( 'Email', 'kbfacade-elementor' ),
-				'type'    => Controls_Manager::TEXT,
-				'default' => 'sales@pkdfasad.by',
-			)
-		);
-		$this->add_control(
-			'map_embed',
-			array(
-				'label'       => esc_html__( 'Map embed HTML / iframe', 'kbfacade-elementor' ),
-				'type'        => Controls_Manager::CODE,
-				'language'    => 'html',
-				'description' => esc_html__( 'Optional. Paste an iframe from your map provider.', 'kbfacade-elementor' ),
+				'type'            => Controls_Manager::RAW_HTML,
+				'raw'             => esc_html__( 'Адрес, телефоны, email, карта и соцсети берутся из Settings → КБФасад.', 'kbfacade-elementor' ),
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			)
 		);
 
@@ -124,30 +84,46 @@ class Contacts extends Widget_Base_Common {
 	 * @return void
 	 */
 	protected function render() {
-		$s  = $this->get_settings_for_display();
-		$id = ! empty( $s['anchor'] ) ? $s['anchor'] : 'contacts';
+		$s       = $this->get_settings_for_display();
+		$id      = ! empty( $s['anchor'] ) ? $s['anchor'] : 'contacts';
+		$address = Settings::get_address();
+		$phones  = Settings::get_phones();
+		$email   = Settings::get_email();
+		$map     = Settings::get_map_embed();
+		$social  = Settings::get_social();
 		?>
 		<section class="kbf-contacts" id="<?php echo esc_attr( $id ); ?>">
-			<div class="kbf-container kbf-contacts__grid">
-				<div class="kbf-contacts__info">
-					<h2><?php echo esc_html( $s['title'] ); ?></h2>
-					<p class="kbf-contacts__address"><?php echo esc_html( $s['address'] ); ?></p>
+			<div class="kbf-container kbf-contacts__row">
+				<h2 class="kbf-contacts__title"><?php echo esc_html( $s['title'] ); ?></h2>
+				<div class="kbf-contacts__details">
+					<?php if ( $address ) : ?>
+						<p class="kbf-contacts__address"><?php echo esc_html( $address ); ?></p>
+					<?php endif; ?>
 					<div class="kbf-contacts__phones">
-						<?php foreach ( (array) $s['phones'] as $item ) : ?>
-							<?php $tel = preg_replace( '/[^\d+]/', '', $item['phone'] ); ?>
-							<a href="tel:<?php echo esc_attr( $tel ); ?>"><?php echo esc_html( $item['phone'] ); ?></a>
+						<?php foreach ( $phones as $phone ) : ?>
+							<a href="tel:<?php echo esc_attr( kbfacade_tel_href( $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a>
 						<?php endforeach; ?>
 					</div>
-					<?php if ( ! empty( $s['email'] ) ) : ?>
-						<a class="kbf-contacts__email" href="mailto:<?php echo esc_attr( $s['email'] ); ?>"><?php echo esc_html( $s['email'] ); ?></a>
+					<?php if ( $email ) : ?>
+						<a class="kbf-contacts__email" href="mailto:<?php echo esc_attr( $email ); ?>"><?php echo esc_html( $email ); ?></a>
+					<?php endif; ?>
+					<?php if ( ! empty( $social ) ) : ?>
+						<div class="kbf-contacts__social">
+							<?php foreach ( $social as $item ) : ?>
+								<?php if ( empty( $item['url'] ) ) { continue; } ?>
+								<a href="<?php echo esc_url( $item['url'] ); ?>" target="_blank" rel="noopener noreferrer">
+									<?php echo esc_html( $item['label'] ? $item['label'] : $item['url'] ); ?>
+								</a>
+							<?php endforeach; ?>
+						</div>
 					<?php endif; ?>
 				</div>
-				<?php if ( ! empty( $s['map_embed'] ) ) : ?>
-					<div class="kbf-contacts__map">
-						<?php echo wp_kses( $s['map_embed'], array( 'iframe' => array( 'src' => true, 'width' => true, 'height' => true, 'style' => true, 'allowfullscreen' => true, 'loading' => true, 'referrerpolicy' => true, 'frameborder' => true, 'title' => true ) ) ); ?>
-					</div>
-				<?php endif; ?>
 			</div>
+			<?php if ( $map ) : ?>
+				<div class="kbf-container kbf-contacts__map">
+					<?php echo $map; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sanitized iframe allowlist. ?>
+				</div>
+			<?php endif; ?>
 		</section>
 		<?php
 	}
