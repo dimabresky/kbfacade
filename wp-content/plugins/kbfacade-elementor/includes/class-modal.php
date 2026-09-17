@@ -59,8 +59,8 @@ class Modal {
 						<input type="text" name="company" autocomplete="organization" />
 					</label>
 					<label>
-						<span><?php esc_html_e( 'Имя', 'kbfacade-elementor' ); ?> *</span>
-						<input type="text" name="name" required autocomplete="name" />
+						<span><?php esc_html_e( 'Имя', 'kbfacade-elementor' ); ?></span>
+						<input type="text" name="name" autocomplete="name" />
 					</label>
 					<label>
 						<span class="kbf-form__label-strong"><?php esc_html_e( 'Контактный номер', 'kbfacade-elementor' ); ?> *</span>

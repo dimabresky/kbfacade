@@ -109,21 +109,12 @@ class Rest_Forms {
 		$name    = sanitize_text_field( (string) $request->get_param( 'name' ) );
 		$email   = sanitize_email( (string) $request->get_param( 'email' ) );
 
-		if ( 'modal' === $form_type ) {
-			if ( '' === $name ) {
-				return new \WP_Error(
-					'kbfacade_name_required',
-					__( 'Укажите имя.', 'kbfacade-elementor' ),
-					array( 'status' => 400 )
-				);
-			}
-			if ( $email && ! is_email( $email ) ) {
-				return new \WP_Error(
-					'kbfacade_email_invalid',
-					__( 'Укажите корректный email.', 'kbfacade-elementor' ),
-					array( 'status' => 400 )
-				);
-			}
+		if ( 'modal' === $form_type && $email && ! is_email( $email ) ) {
+			return new \WP_Error(
+				'kbfacade_email_invalid',
+				__( 'Укажите корректный email.', 'kbfacade-elementor' ),
+				array( 'status' => 400 )
+			);
 		}
 
 		$recipient = Settings::get_recipient();
