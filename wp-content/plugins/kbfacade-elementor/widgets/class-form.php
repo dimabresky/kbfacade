@@ -113,6 +113,7 @@ class Form extends Widget_Base_Common {
 						<input type="text" name="website" class="kbf-form__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
 						<button type="submit" class="kbf-btn kbf-btn--orange"><?php echo esc_html( $s['button_label'] ); ?></button>
 						<p class="kbf-form__message" data-kbf-form-message role="status" aria-live="polite"></p>
+						<p class="kbf-form__hint"><?php esc_html_e( 'Номер в виде "+7 ..."', 'kbfacade-elementor' ); ?></p>
 					</form>
 				</div>
 			</div>

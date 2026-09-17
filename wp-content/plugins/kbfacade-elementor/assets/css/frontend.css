@@ -388,6 +388,13 @@
 	color: #b42318;
 }
 
+.kbf-form__hint {
+	margin: 0;
+	font-size: 0.85rem;
+	line-height: 1.35;
+	color: rgba(52, 61, 69, 0.5);
+}
+
 /* Hero */
 .kbf-hero {
 	position: relative;
