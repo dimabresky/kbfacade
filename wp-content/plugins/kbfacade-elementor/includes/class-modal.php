@@ -59,15 +59,16 @@ class Modal {
 						<input type="text" name="company" autocomplete="organization" />
 					</label>
 					<label>
-						<span><?php esc_html_e( 'Имя', 'kbfacade-elementor' ); ?> *</span>
-						<input type="text" name="name" required autocomplete="name" />
+						<span><?php esc_html_e( 'Имя', 'kbfacade-elementor' ); ?></span>
+						<input type="text" name="name" autocomplete="name" />
 					</label>
 					<label>
-						<span><?php esc_html_e( 'Контактный номер', 'kbfacade-elementor' ); ?> *</span>
-						<input type="tel" name="phone" required autocomplete="tel" />
+						<span class="kbf-form__label-strong"><?php esc_html_e( 'Контактный номер', 'kbfacade-elementor' ); ?> *</span>
+						<input type="tel" name="phone" required autocomplete="tel" placeholder="<?php echo esc_attr( '+7 977 721 00 21' ); ?>" />
+						<small class="kbf-form__hint"><?php esc_html_e( 'Номер в виде "+7 ..."', 'kbfacade-elementor' ); ?></small>
 					</label>
 					<label>
-						<span><?php esc_html_e( 'Ваш email', 'kbfacade-elementor' ); ?></span>
+						<span class="kbf-form__label-strong"><?php esc_html_e( 'Ваш email', 'kbfacade-elementor' ); ?></span>
 						<input type="email" name="email" autocomplete="email" />
 					</label>
 					<label class="kbf-form__consent">

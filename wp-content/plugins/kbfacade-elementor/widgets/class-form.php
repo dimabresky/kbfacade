@@ -103,8 +103,9 @@ class Form extends Widget_Base_Common {
 							</label>
 						<?php endif; ?>
 						<label>
-							<span><?php esc_html_e( 'ТЕЛЕФОН', 'kbfacade-elementor' ); ?> *</span>
-							<input type="tel" name="phone" required autocomplete="tel" />
+							<span class="kbf-form__label-strong"><?php esc_html_e( 'ТЕЛЕФОН', 'kbfacade-elementor' ); ?> *</span>
+							<input type="tel" name="phone" required autocomplete="tel" placeholder="<?php echo esc_attr( '+7 977 721 00 21' ); ?>" />
+							<small class="kbf-form__hint"><?php esc_html_e( 'Номер в виде "+7 ..."', 'kbfacade-elementor' ); ?></small>
 						</label>
 						<label class="kbf-form__consent">
 							<input type="checkbox" name="consent" value="1" required />

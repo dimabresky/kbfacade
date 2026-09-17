@@ -333,6 +333,10 @@
 	font-size: 0.95rem;
 }
 
+.kbf-form__label-strong {
+	font-weight: 700;
+}
+
 .kbf-form input[type="text"],
 .kbf-form input[type="tel"],
 .kbf-form input[type="email"] {
@@ -382,6 +386,14 @@
 
 .kbf-form__message.is-error {
 	color: #b42318;
+}
+
+.kbf-form__hint {
+	display: block;
+	margin: 0;
+	font-size: 0.85rem;
+	line-height: 1.35;
+	color: rgba(52, 61, 69, 0.5);
 }
 
 /* Hero */
