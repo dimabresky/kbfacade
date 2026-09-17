@@ -333,6 +333,10 @@
 	font-size: 0.95rem;
 }
 
+.kbf-form__label-strong {
+	font-weight: 700;
+}
+
 .kbf-form input[type="text"],
 .kbf-form input[type="tel"],
 .kbf-form input[type="email"] {
