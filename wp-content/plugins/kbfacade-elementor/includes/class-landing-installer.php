@@ -179,6 +179,7 @@ class Landing_Installer {
 			array( 'kbf-header', array() ),
 			array( 'kbf-hero', array() ),
 			array( 'kbf-about', array() ),
+			array( 'kbf-promo', array() ),
 			array( 'kbf-catalog', array() ),
 			array( 'kbf-gallery', array() ),
 			array(

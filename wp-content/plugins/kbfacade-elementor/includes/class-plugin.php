@@ -87,6 +87,7 @@ class Plugin {
 			'class-header.php'   => 'KBFacadeElementor\\Widgets\\Header',
 			'class-hero.php'     => 'KBFacadeElementor\\Widgets\\Hero',
 			'class-about.php'    => 'KBFacadeElementor\\Widgets\\About',
+			'class-promo.php'    => 'KBFacadeElementor\\Widgets\\Promo',
 			'class-catalog.php'  => 'KBFacadeElementor\\Widgets\\Catalog',
 			'class-gallery.php'  => 'KBFacadeElementor\\Widgets\\Gallery',
 			'class-benefits.php' => 'KBFacadeElementor\\Widgets\\Benefits',
