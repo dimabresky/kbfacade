@@ -53,6 +53,19 @@
           "elType": "column",
           "settings": { "_column_size": 100 },
           "elements": [
+            { "elType": "widget", "widgetType": "kbf-promo", "settings": {} }
+          ]
+        }
+      ]
+    },
+    {
+      "elType": "section",
+      "settings": { "layout": "full_width", "gap": "no" },
+      "elements": [
+        {
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
             { "elType": "widget", "widgetType": "kbf-catalog", "settings": {} }
           ]
         }

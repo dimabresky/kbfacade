@@ -60,6 +60,7 @@
 	font: inherit;
 	font-weight: 700;
 	cursor: pointer;
+	text-decoration: none;
 	transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -629,10 +630,11 @@
 	width: min(300px, 72%);
 }
 
-/* Catalog / benefits / services */
+/* Catalog / benefits / services / promo */
 .kbf-catalog,
 .kbf-benefits,
-.kbf-services {
+.kbf-services,
+.kbf-promo {
 	padding: 3.25rem 0 4rem;
 }
 
@@ -643,6 +645,19 @@
 .kbf-catalog > .kbf-container {
 	border-top: 1px solid #343d45;
 	padding-top: 3.25rem;
+}
+
+.kbf-promo {
+	padding-top: 0;
+}
+
+.kbf-promo > .kbf-container {
+	border-top: 1px solid #343d45;
+	padding-top: 3.25rem;
+}
+
+.kbf-promo .kbf-section-head {
+	margin-bottom: 1.5rem;
 }
 
 .kbf-benefits {
