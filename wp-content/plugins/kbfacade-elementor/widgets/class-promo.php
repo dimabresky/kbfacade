@@ -82,7 +82,7 @@ class Promo extends Widget_Base_Common {
 				'type'        => Controls_Manager::URL,
 				'default'     => array(
 					'url'         => 'https://xn--90aiaxvq.xn--p1acf/',
-					'is_external' => 'true',
+					'is_external' => 'on',
 					'nofollow'    => '',
 				),
 				'placeholder' => 'https://',
@@ -99,7 +99,12 @@ class Promo extends Widget_Base_Common {
 		$s   = $this->get_settings_for_display();
 		$url = ! empty( $s['button_url']['url'] ) ? $s['button_url']['url'] : 'https://xn--90aiaxvq.xn--p1acf/';
 
-		$rel = array( 'noopener', 'noreferrer' );
+		$is_external = ! empty( $s['button_url']['is_external'] );
+		$rel         = array();
+		if ( $is_external ) {
+			$rel[] = 'noopener';
+			$rel[] = 'noreferrer';
+		}
 		if ( ! empty( $s['button_url']['nofollow'] ) ) {
 			$rel[] = 'nofollow';
 		}
@@ -113,8 +118,12 @@ class Promo extends Widget_Base_Common {
 				<a
 					href="<?php echo esc_url( $url ); ?>"
 					class="kbf-btn kbf-btn--orange"
-					target="_blank"
-					rel="<?php echo esc_attr( implode( ' ', $rel ) ); ?>"
+					<?php if ( $is_external ) : ?>
+						target="_blank"
+					<?php endif; ?>
+					<?php if ( ! empty( $rel ) ) : ?>
+						rel="<?php echo esc_attr( implode( ' ', $rel ) ); ?>"
+					<?php endif; ?>
 				>
 					<?php echo esc_html( $s['button_label'] ); ?>
 				</a>
